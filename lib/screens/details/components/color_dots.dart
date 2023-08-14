@@ -6,16 +6,22 @@ import '../../../constants.dart';
 import '../../../size_config.dart';
 
 class ColorDots extends StatelessWidget {
-  const ColorDots({
+   ColorDots({
     Key? key,
-    required this.product,
+
   }) : super(key: key);
 
-  final Product product;
+
 
   @override
   Widget build(BuildContext context) {
     // Now this is fixed and only for demo
+   List colors= [
+      Color(0xFFF6625E),
+      Color(0xFF836DB8),
+      Color(0xFFDECB9C),
+      Colors.white,
+    ];
     int selectedColor = 3;
     return Padding(
       padding:
@@ -23,9 +29,9 @@ class ColorDots extends StatelessWidget {
       child: Row(
         children: [
           ...List.generate(
-            product.colors.length,
+            colors.length,
             (index) => ColorDot(
-              color: product.colors[index],
+              color: colors[index],
               isSelected: index == selectedColor,
             ),
           ),

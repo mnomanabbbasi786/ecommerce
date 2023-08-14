@@ -1,16 +1,25 @@
+import 'package:ecommerce/provider/CartProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '/models/Cart.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
 
 class CartCard extends StatelessWidget {
-  const CartCard({
+   CartCard({
     Key? key,
-    required this.cart,
+    required this.id,
+     required this.productName,
+     required this.image,
+     required this.price
   }) : super(key: key);
 
-  final Cart cart;
+var id;
+var productName;
+var image;
+var price;
+
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +35,7 @@ class CartCard extends StatelessWidget {
                 color: Color(0xFFF5F6F9),
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: Image.asset(cart.product.images[0]),
+              child: Image.network(image),
             ),
           ),
         ),
@@ -35,22 +44,26 @@ class CartCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              cart.product.title,
+              productName,
               style: TextStyle(color: Colors.black, fontSize: 16),
               maxLines: 2,
             ),
             SizedBox(height: 10),
-            Text.rich(
-              TextSpan(
-                text: "\$${cart.product.price}",
-                style: TextStyle(
-                    fontWeight: FontWeight.w600, color: kPrimaryColor),
-                children: [
+            Consumer<CartProvider>(
+              builder: (context,cartItems,child){
+                return Text.rich(
                   TextSpan(
-                      text: " x${cart.numOfItem}",
-                      style: Theme.of(context).textTheme.bodyText1),
-                ],
-              ),
+                    text: "\$${price}",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600, color: kPrimaryColor),
+                    children: [
+                      TextSpan(
+                          text: " x${cartItems.items.length}",
+                          style: Theme.of(context).textTheme.bodyText1),
+                    ],
+                  ),
+                );
+              }
             )
           ],
         )

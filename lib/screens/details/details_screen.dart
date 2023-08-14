@@ -15,15 +15,18 @@ class DetailsScreen extends StatelessWidget {
       backgroundColor: Color(0xFFF5F6F9),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(AppBar().preferredSize.height),
-        child: CustomAppBar(rating: agrs.product.rating),
+        child: CustomAppBar(rating: agrs.rrPrice),
       ),
-      body: Body(product: agrs.product),
+      body: Body(image: agrs.image,id: agrs.id,productName: agrs.productName,rrPrice: agrs.rrPrice),
     );
   }
 }
 
 class ProductDetailsArguments {
-  final Product product;
+  var id;
+  var productName;
+  var rrPrice;
+  var image;
 
-  ProductDetailsArguments({required this.product});
+  ProductDetailsArguments({required this.id,required this.productName,required this.rrPrice,required this.image});
 }

@@ -1,36 +1,44 @@
+import 'package:ecommerce/models/CartModel.dart';
+import 'package:ecommerce/provider/CartProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '/components/default_button.dart';
-import '/models/Product.dart';
 import '/size_config.dart';
-
 import 'color_dots.dart';
 import 'product_description.dart';
 import 'top_rounded_container.dart';
 import 'product_images.dart';
 
 class Body extends StatelessWidget {
-  final Product product;
+var id;
+var productName;
+var image;
+var rrPrice;
 
-  const Body({Key? key, required this.product}) : super(key: key);
+   Body({Key? key, required this.id,required this.rrPrice,required this.image,required this.productName}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<CartProvider>(context);
     return ListView(
       children: [
-        ProductImages(product: product),
+        ProductImages(image: image,id: id,),
         TopRoundedContainer(
           color: Colors.white,
           child: Column(
             children: [
               ProductDescription(
-                product: product,
                 pressOnSeeMore: () {},
+                image: image,
+                rrPrice: rrPrice,
+                productName: productName,
+                id: id,
               ),
               TopRoundedContainer(
                 color: Color(0xFFF6F7F9),
                 child: Column(
                   children: [
-                    ColorDots(product: product),
+                    ColorDots(),
                     TopRoundedContainer(
                       color: Colors.white,
                       child: Padding(
@@ -42,7 +50,9 @@ class Body extends StatelessWidget {
                         ),
                         child: DefaultButton(
                           text: "Add To Cart",
-                          press: () {},
+                          press: () {
+                            cart.addToCart(CartModel(id: id, productName: productName, price: rrPrice, quantity: 1,image: image));
+                          },
                         ),
                       ),
                     ),

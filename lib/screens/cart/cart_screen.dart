@@ -1,4 +1,6 @@
+import 'package:ecommerce/provider/CartProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '/models/Cart.dart';
 
 import 'components/body.dart';
@@ -19,13 +21,18 @@ class CartScreen extends StatelessWidget {
     return AppBar(
       title: Column(
         children: [
-          Text(
+          const Text(
             "Your Cart",
             style: TextStyle(color: Colors.black),
           ),
-          Text(
-            "${demoCarts.length} items",
-            style: Theme.of(context).textTheme.caption,
+          Consumer<CartProvider>(
+            builder: (context,cartItems, child){
+
+              return Text(
+                "${cartItems.items.length} items",
+                style: Theme.of(context).textTheme.caption,
+              );
+            }
           ),
         ],
       ),
