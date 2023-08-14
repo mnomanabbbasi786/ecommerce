@@ -1,3 +1,5 @@
+// ignore_for_file: override_on_non_overriding_member
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '/constants.dart';
@@ -10,7 +12,6 @@ class CustomAppBar extends StatelessWidget {
   CustomAppBar({required this.rating});
 
   @override
-  // AppBar().preferredSize.height provide us the height that appy on our app bar
   Size get preferredSize => Size.fromHeight(AppBar().preferredSize.height);
 
   @override
