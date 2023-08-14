@@ -1,3 +1,4 @@
+import 'package:ecommerce/screens/notification/widgets/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -33,9 +34,52 @@ InputDecorationTheme inputDecorationTheme() {
 }
 
 TextTheme textTheme() {
-  return TextTheme(
-    bodyText1: TextStyle(color: kTextColor),
-    bodyText2: TextStyle(color: kTextColor),
+  return const TextTheme(
+    headline1: TextStyle(
+      color: mainText,
+      fontFamily: 'Inter',
+      fontSize: 22,
+      fontWeight: FontWeight.w700,
+    ),
+
+    //this font we will use later 'H2'
+
+    headline2: TextStyle(
+      color: mainText,
+      fontFamily: 'Inter',
+      fontSize: 17,
+      fontWeight: FontWeight.w700,
+    ),
+    //this font we will use  later 'H3'
+
+    headline3: TextStyle(
+      fontFamily: 'Inter',
+      fontSize: 15,
+      fontWeight: FontWeight.w700,
+    ),
+
+    //this font we will use later 'P1'
+
+    bodyText1: TextStyle(
+      color: SecondaryText,
+      fontFamily: 'Inter',
+      fontSize: 17,
+      fontWeight: FontWeight.w500,
+    ),
+
+    //this font we will use later 'P2'
+
+    bodyText2: TextStyle(
+      fontFamily: 'Inter',
+      fontSize: 15,
+      fontWeight: FontWeight.w500,
+    ),
+    //this font we will use later 'S'
+    subtitle1: TextStyle(
+      fontFamily: 'Inter',
+      fontSize: 12,
+      fontWeight: FontWeight.w500,
+    ),
   );
 }
 
