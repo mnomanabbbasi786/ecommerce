@@ -2,7 +2,7 @@ import 'package:ecommerce/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '/routes.dart';
-import '/screens/profile/profile_screen.dart';
+
 import '/screens/splash/splash_screen.dart';
 import '/theme.dart';
 

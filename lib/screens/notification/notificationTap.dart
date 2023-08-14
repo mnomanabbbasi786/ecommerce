@@ -2,6 +2,7 @@ import 'package:ecommerce/screens/notification/widgets/customfollow.dart';
 import 'package:ecommerce/screens/notification/widgets/customlike.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class NotitcationTap extends StatelessWidget {
   static String routeName = "/notification";
   NotitcationTap({Key? key}) : super(key: key);

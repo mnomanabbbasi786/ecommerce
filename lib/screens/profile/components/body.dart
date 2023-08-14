@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../notification/notificationTap.dart';
 import 'profile_menu.dart';
 import 'profile_pic.dart';
 
@@ -20,7 +21,9 @@ class Body extends StatelessWidget {
           ProfileMenu(
             text: "Notifications",
             icon: "assets/icons/Bell.svg",
-            press: () {},
+            press: () {
+              Navigator.pushNamed(context, NotitcationTap.routeName);
+            },
           ),
           ProfileMenu(
             text: "Settings",
