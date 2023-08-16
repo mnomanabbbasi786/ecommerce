@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../darkmodebutton.dart';
 import '/components/coustom_bottom_nav_bar.dart';
 import '/enums.dart';
 
@@ -11,6 +13,15 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Profile"),
+        actions: [
+          DarkModeButton(
+            onPressed: () {
+              Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
+            },
+            lightColor: Colors.black,
+            darkColor: Colors.white,
+          )
+        ],
       ),
       body: Body(),
       bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.profile),

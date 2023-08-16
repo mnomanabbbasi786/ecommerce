@@ -1,12 +1,10 @@
-import 'package:ecommerce/provider/CartProvider.dart';
-import 'package:ecommerce/provider/PopularProductProvider.dart';
-import 'package:ecommerce/provider/WishListProvider.dart';
+import 'package:ecommerce/screens/darkmodebutton.dart';
 import 'package:ecommerce/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '/routes.dart';
-import '/screens/profile/profile_screen.dart';
+
 import '/screens/splash/splash_screen.dart';
 import '/theme.dart';
 
@@ -16,7 +14,13 @@ void main() async {
   bool seen = prefs.getBool('seen') ?? false;
   String initialRoute = seen ? HomeScreen.routeName : SplashScreen.routeName;
 
-  runApp(MyApp(initialRoute: initialRoute));
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child:
+          MyApp(initialRoute: initialRoute), // Or your preferred initial route.
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -26,21 +30,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context)=>PopularProductProvider()),
-        ChangeNotifierProvider(create: (context)=>CartProvider()),
-        ChangeNotifierProvider(create: (context)=>WishListProvider())
-      ],
-      child:  MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: theme(),
-        // home: SplashScreen(),
-        // We use routeName so that we dont need to remember the name
-        initialRoute: SplashScreen.routeName,
-        routes: routes,
-      ),
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'HSE-ecommerce',
+      theme: theme(),
+      darkTheme: darkTheme(),
+      themeMode: themeProvider.themeMode,
+      initialRoute: initialRoute,
+      routes: routes,
     );
   }
 }

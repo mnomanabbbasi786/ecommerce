@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../notification/notificationTap.dart';
 import '/screens/cart/cart_screen.dart';
 
 import '../../../size_config.dart';
@@ -26,7 +27,7 @@ class HomeHeader extends StatelessWidget {
           IconBtnWithCounter(
             svgSrc: "assets/icons/Bell.svg",
             numOfitem: 3,
-            press: () {},
+            press: () => Navigator.pushNamed(context, NotitcationTap.routeName),
           ),
         ],
       ),
