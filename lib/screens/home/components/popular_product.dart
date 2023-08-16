@@ -7,9 +7,9 @@ import 'package:provider/provider.dart';
 import '../../../database/PopularProductRepostry.dart';
 import '../../../models/ProductModel.dart';
 import '../../../models/WishlistModel.dart';
-import '../../../provider/PopularProductProvider.dart';
+
 import '/components/product_card.dart';
-import '/models/Product.dart';
+
 import '../../../size_config.dart';
 import 'section_title.dart';
 
@@ -19,7 +19,6 @@ class PopularProducts extends StatefulWidget {
 }
 
 class _PopularProductsState extends State<PopularProducts> {
-
   int start = 0;
   int end = 50;
   bool isLoading = true;
@@ -32,8 +31,7 @@ class _PopularProductsState extends State<PopularProducts> {
     print('lenth${PopularProductRepostry.length}');
     print('start: $start');
     print('end: $end');
-    var response =
-    await PopularProductRepostry.fetchPopularProduct(start, end);
+    var response = await PopularProductRepostry.fetchPopularProduct(start, end);
     PopularProductRepostry.fetchPopularProductLength();
     productData.addAll(response);
     print('data length: ${productData.length}');
@@ -49,11 +47,8 @@ class _PopularProductsState extends State<PopularProducts> {
     fetchPopularProducts();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: [
         Padding(
@@ -71,10 +66,10 @@ class _PopularProductsState extends State<PopularProducts> {
         SizedBox(height: getProportionateScreenWidth(20)),
         NotificationListener<ScrollNotification>(
           onNotification: (ScrollNotification scrollInfo) {
-            if (!isLoading && (scrollInfo.metrics.maxScrollExtent -
-                scrollInfo.metrics.pixels)
-                .round() <=
-                500)  {
+            if (!isLoading &&
+                (scrollInfo.metrics.maxScrollExtent - scrollInfo.metrics.pixels)
+                        .round() <=
+                    500) {
               start = end;
               if ((end + 50) > PopularProductRepostry.length) {
                 end = PopularProductRepostry.length;
@@ -86,7 +81,6 @@ class _PopularProductsState extends State<PopularProducts> {
               setState(() {
                 isLoading = true;
               });
-
             }
             return true;
           },
@@ -98,29 +92,30 @@ class _PopularProductsState extends State<PopularProducts> {
                   productData.length,
                   (index) {
                     return Consumer<WishListProvider>(
-                      builder: (context,wishListItem,child){
-                        return ProductCard(
-                          isFavorite: wishListItem.selectItem.contains(productData[index].id),
-                          onTap: (){
-                            if(wishListItem.selectItem.contains(productData[index].id)){
-                              wishListItem.removeItem(productData[index].id);
-
-                            }else{
-                              wishListItem.addItem(productData[index].id,WishlistModel(
-                                  id: productData[index].id,
-                                  productName: productData[index].productName,
-                                  price: productData[index].rrPrice,
-                                  image: productData[index].image
-                              ));
-                            }
-                          },
-                          id: productData[index].id,
-                          productName: productData[index].productName,
-                          rrPrice: productData[index].rrPrice,
-                          image: productData[index].image,
-                        );
-                      }
-                    );
+                        builder: (context, wishListItem, child) {
+                      return ProductCard(
+                        isFavorite: wishListItem.selectItem
+                            .contains(productData[index].id),
+                        onTap: () {
+                          if (wishListItem.selectItem
+                              .contains(productData[index].id)) {
+                            wishListItem.removeItem(productData[index].id);
+                          } else {
+                            wishListItem.addItem(
+                                productData[index].id,
+                                WishlistModel(
+                                    id: productData[index].id,
+                                    productName: productData[index].productName,
+                                    price: productData[index].rrPrice,
+                                    image: productData[index].image));
+                          }
+                        },
+                        id: productData[index].id,
+                        productName: productData[index].productName,
+                        rrPrice: productData[index].rrPrice,
+                        image: productData[index].image,
+                      );
+                    });
                   },
                 ),
                 SizedBox(width: getProportionateScreenWidth(20)),
@@ -128,11 +123,15 @@ class _PopularProductsState extends State<PopularProducts> {
             ),
           ),
         ),
-       isLoading? Center(
-          child:SizedBox(
-            child:  PlayStoreShimmer( isPurplishMode: true, colors: [Colors.grey],),
-          )
-        ):Container(),
+        isLoading
+            ? Center(
+                child: SizedBox(
+                child: PlayStoreShimmer(
+                  isPurplishMode: true,
+                  colors: [Colors.grey],
+                ),
+              ))
+            : Container(),
         Center(
           child: Container(
             height: hasMoreData ? 50.0 : 0.0,

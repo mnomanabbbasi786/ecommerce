@@ -2,51 +2,41 @@ import 'package:ecommerce/provider/CartProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '/components/rounded_icon_btn.dart';
-import '/models/Product.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
 
+// ignore: must_be_immutable
 class ColorDots extends StatefulWidget {
-   ColorDots({
-    Key? key,
-     required this.id
+  ColorDots({Key? key, required this.id}) : super(key: key);
 
-  }) : super(key: key);
-
-   var id;
-   static var quantity=1;
+  var id;
+  static var quantity = 1;
   @override
   State<ColorDots> createState() => _ColorDotsState();
 }
 
 class _ColorDotsState extends State<ColorDots> {
-
-
-@override
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
     setState(() {
-      ColorDots.quantity=1;
+      ColorDots.quantity = 1;
     });
-
   }
-
 
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-
   }
-
 
   @override
   Widget build(BuildContext context) {
     // Now this is fixed and only for demo
     final itemQuantity = Provider.of<CartProvider>(context);
-   List colors= [
+    List colors = [
       Color(0xFFF6625E),
       Color(0xFF836DB8),
       Color(0xFFDECB9C),
@@ -70,23 +60,23 @@ class _ColorDotsState extends State<ColorDots> {
             icon: Icons.remove,
             press: () {
               setState(() {
-                ColorDots.quantity= ColorDots.quantity-1;
+                ColorDots.quantity = ColorDots.quantity - 1;
               });
               itemQuantity.setQuantity(ColorDots.quantity);
             },
           ),
           SizedBox(width: getProportionateScreenWidth(20)),
-          Text('${ ColorDots.quantity}'),
+          Text('${ColorDots.quantity}'),
           SizedBox(width: getProportionateScreenWidth(20)),
           RoundedIconBtn(
             icon: Icons.add,
             showShadow: true,
             press: () {
               setState(() {
-                ColorDots.quantity= ColorDots.quantity+1;
+                ColorDots.quantity = ColorDots.quantity + 1;
               });
 
-              itemQuantity.setQuantity( ColorDots.quantity);
+              itemQuantity.setQuantity(ColorDots.quantity);
             },
           ),
         ],

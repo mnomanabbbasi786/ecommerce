@@ -6,6 +6,7 @@ import '/constants.dart';
 
 import '../../../size_config.dart';
 
+// ignore: must_be_immutable
 class CustomAppBar extends StatelessWidget {
   var rating;
 
