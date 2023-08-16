@@ -3,9 +3,9 @@ import 'package:ecommerce/provider/CartProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '/models/Cart.dart';
+
 import '../../../constants.dart';
 import '../../../size_config.dart';
-
 
 class WishlistCard extends StatelessWidget {
   WishlistCard({
@@ -35,33 +35,33 @@ class WishlistCard extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.all(getProportionateScreenWidth(10)),
               decoration: BoxDecoration(
-                color: const Color(0xFFF5F6F9),
+                color: Color(0xFFF5F6F9),
                 borderRadius: BorderRadius.circular(15),
               ),
               child: CachedNetworkImage(
                 imageUrl: image,
-                placeholder: (context, url) => const CircularProgressIndicator(),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
+                placeholder: (context, url) => CircularProgressIndicator(),
+                errorWidget: (context, url, error) => Icon(Icons.error),
               ),
             ),
           ),
         ),
-        const SizedBox(width: 20),
+        SizedBox(width: 20),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               productName,
-              style: const TextStyle(color: Colors.black, fontSize: 16),
+              style: TextStyle(color: Colors.black, fontSize: 16),
               maxLines: 2,
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             Consumer<CartProvider>(
                 builder: (context,cartItems,child){
                   return Text.rich(
                     TextSpan(
                       text: "\$${price}",
-                      style: const TextStyle(
+                      style: TextStyle(
                           fontWeight: FontWeight.w600, color: kPrimaryColor),
                     ),
                   );
