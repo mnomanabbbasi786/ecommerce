@@ -39,7 +39,7 @@ class ProductDescription extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.all(getProportionateScreenWidth(15)),
             width: getProportionateScreenWidth(64),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color:
                   false ? Color(0xFFFFE6E6) : Color(0xFFF5F6F9),
               borderRadius: BorderRadius.only(
@@ -50,7 +50,7 @@ class ProductDescription extends StatelessWidget {
             child: SvgPicture.asset(
               "assets/icons/Heart Icon_2.svg",
               color:
-                  false ? Color(0xFFFF4848) : Color(0xFFDBDEE4),
+                  false ? const Color(0xFFFF4848) : const Color(0xFFDBDEE4),
               height: getProportionateScreenWidth(16),
             ),
           ),
@@ -72,7 +72,7 @@ class ProductDescription extends StatelessWidget {
           ),
           child: GestureDetector(
             onTap: () {},
-            child: Row(
+            child: const Row(
               children: [
                 Text(
                   "See More Detail",

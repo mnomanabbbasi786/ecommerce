@@ -1,4 +1,3 @@
-import 'dart:js';
 
 import 'package:ecommerce/provider/CartProvider.dart';
 import 'package:ecommerce/provider/PopularProductProvider.dart';
