@@ -1,95 +1,54 @@
-import 'dart:convert';
-
 import 'package:ecommerce/provider/WishListProvider.dart';
-import 'package:ecommerce/screens/productScreen/AllProductScreen.dart';
+import 'package:ecommerce/screens/productScreen/PopularProductScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shimmer/flutter_shimmer.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../database/PopularProductRepostry.dart';
 import '../../../models/ProductModel.dart';
 import '../../../models/WishlistModel.dart';
+
 import '/components/product_card.dart';
+
 import '../../../size_config.dart';
 import 'section_title.dart';
-List<ProductModel> product =[];
-bool isLoading = true;
-class AllProducts extends StatefulWidget {
-  const AllProducts({super.key});
 
+class PopularProducts extends StatefulWidget {
   @override
-  State<AllProducts> createState() => _AllProductsState();
+  State<PopularProducts> createState() => _PopularProductsState();
 }
 
-class _AllProductsState extends State<AllProducts> {
-
-
+class _PopularProductsState extends State<PopularProducts> {
   int start = 0;
   int end = 50;
-
-
+  bool isLoading = true;
 
   List<ProductModel> productData = [];
-
   var hasMoreData = false;
 
   fetchPopularProducts() async {
-    var response =
-      await PopularProductRepostry.fetchPopularProduct(start, end);
-    await PopularProductRepostry.fetchPopularProductLength();
+    print("FETCHING DATA");
+    print('lenth${PopularProductRepostry.length}');
+    print('start: $start');
+    print('end: $end');
+    var response = await PopularProductRepostry.fetchPopularProduct(start, end);
+    PopularProductRepostry.fetchPopularProductLength();
     productData.addAll(response);
-    storeProductData(productData);
+    print('data length: ${productData.length}');
     isLoading = false;
     setState(() {});
-  }
-
-  String serializeProductData(List<ProductModel> products) {
-    // Convert the list of ProductModel objects to a list of maps (JSON-like format)
-    List<Map<String, dynamic>> productJsonList = products.map((product) => product.toJson()).toList();
-
-    // Convert the list of maps to a JSON string
-    return json.encode(productJsonList);
-  }
-
-  List<ProductModel> getProductDataFromPrefs(String? productDataJson) {
-    final List<dynamic> productJsonList = json.decode(productDataJson!);
-    List<ProductModel> products = productJsonList
-        .map((productJson) => ProductModel.fromJson(productJson))
-        .toList();
-    return products;
-  }
-
-  storeProductData(List<ProductModel> products) async {
-    try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-
-      String productDataJson = serializeProductData(products);
-      prefs.setString('productData', productDataJson);
-      List<ProductModel> storedProducts = getProductDataFromPrefs(productDataJson);
-        product.addAll(storedProducts);
-    } catch (error) {
-      print('Error storing product data: $error');
-    }
+    print(productData);
   }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    print(product);
-    if(product.isEmpty){
-      fetchPopularProducts();
-    }
-
+    fetchPopularProducts();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
-    final  wishilistProvider = Provider.of<WishListProvider>(context);
-    wishilistProvider.fetchWishlistId();
     return Column(
       children: [
         Padding(
@@ -101,16 +60,16 @@ class _AllProductsState extends State<AllProducts> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => AllProductsScreen()));
+                        builder: (context) => PopularProductScreen()));
               }),
         ),
         SizedBox(height: getProportionateScreenWidth(20)),
         NotificationListener<ScrollNotification>(
           onNotification: (ScrollNotification scrollInfo) {
-            if (!isLoading && (scrollInfo.metrics.maxScrollExtent -
-                scrollInfo.metrics.pixels)
-                .round() <=
-                200)  {
+            if (!isLoading &&
+                (scrollInfo.metrics.maxScrollExtent - scrollInfo.metrics.pixels)
+                        .round() <=
+                    500) {
               start = end;
               if ((end + 50) > PopularProductRepostry.length) {
                 end = PopularProductRepostry.length;
@@ -118,16 +77,10 @@ class _AllProductsState extends State<AllProducts> {
               } else {
                 end = end + 50;
               }
-              if(product.length == PopularProductRepostry.length){
-
-              }else{
-                fetchPopularProducts();
-              }
-
+              fetchPopularProducts();
               setState(() {
                 isLoading = true;
               });
-
             }
             return true;
           },
@@ -136,32 +89,33 @@ class _AllProductsState extends State<AllProducts> {
             child: Row(
               children: [
                 ...List.generate(
-                  product.length,
+                  productData.length,
                   (index) {
                     return Consumer<WishListProvider>(
-                      builder: (context,wishListItem,child){
-                        return ProductCard(
-                          isFavorite: wishListItem.selectItem.contains(product[index].id),
-                          onTap: (){
-                            if(wishListItem.selectItem.contains(product[index].id)){
-                              wishListItem.removeItem(product[index].id);
-
-                            }else{
-                              wishListItem.addItem(productData[index].id,WishlistModel(
-                                  id: product[index].id,
-                                  productName: product[index].productName,
-                                  price: product[index].rrPrice,
-                                  image: product[index].image
-                              ));
-                            }
-                          },
-                          id: product[index].id,
-                          productName: product[index].productName,
-                          rrPrice: product[index].rrPrice,
-                          image: product[index].image,
-                        );
-                      }
-                    );
+                        builder: (context, wishListItem, child) {
+                      return ProductCard(
+                        isFavorite: wishListItem.selectItem
+                            .contains(productData[index].id),
+                        onTap: () {
+                          if (wishListItem.selectItem
+                              .contains(productData[index].id)) {
+                            wishListItem.removeItem(productData[index].id);
+                          } else {
+                            wishListItem.addItem(
+                                productData[index].id,
+                                WishlistModel(
+                                    id: productData[index].id,
+                                    productName: productData[index].productName,
+                                    price: productData[index].rrPrice,
+                                    image: productData[index].image));
+                          }
+                        },
+                        id: productData[index].id,
+                        productName: productData[index].productName,
+                        rrPrice: productData[index].rrPrice,
+                        image: productData[index].image,
+                      );
+                    });
                   },
                 ),
                 SizedBox(width: getProportionateScreenWidth(20)),
@@ -169,13 +123,17 @@ class _AllProductsState extends State<AllProducts> {
             ),
           ),
         ),
-       isLoading? const Center(
-          child:SizedBox(
-            child:  PlayStoreShimmer( isPurplishMode: true, colors: [Colors.grey],),
-          )
-        ):Container(),
+        isLoading
+            ? Center(
+                child: SizedBox(
+                child: PlayStoreShimmer(
+                  isPurplishMode: true,
+                  colors: [Colors.grey],
+                ),
+              ))
+            : Container(),
         Center(
-          child: SizedBox(
+          child: Container(
             height: hasMoreData ? 50.0 : 0.0,
             child: Text("You have watched all the posts${productData.length}"),
           ),
