@@ -1,3 +1,8 @@
+import 'dart:js';
+
+import 'package:ecommerce/provider/CartProvider.dart';
+import 'package:ecommerce/provider/PopularProductProvider.dart';
+import 'package:ecommerce/provider/WishListProvider.dart';
 import 'package:ecommerce/screens/darkmodebutton.dart';
 import 'package:ecommerce/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -14,12 +19,16 @@ void main() async {
   bool seen = prefs.getBool('seen') ?? false;
   String initialRoute = seen ? HomeScreen.routeName : SplashScreen.routeName;
 
-  runApp(
-    ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
-      child:
-          MyApp(initialRoute: initialRoute), // Or your preferred initial route.
-    ),
+  runApp( MultiProvider(
+      providers: [
+      ChangeNotifierProvider(create: (context) => ThemeProvider()),
+        ChangeNotifierProvider(create: (context)=>WishListProvider()),
+        ChangeNotifierProvider(create: (context)=>PopularProductProvider()),
+        ChangeNotifierProvider(create: (context)=>CartProvider())
+      ],
+    child:
+    MyApp(initialRoute: initialRoute),
+  )
   );
 }
 
