@@ -1,10 +1,14 @@
+import 'package:ecommerce/models/WishlistModel.dart';
 import 'package:ecommerce/provider/PopularProductProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_shimmer/flutter_shimmer.dart';
 import 'package:provider/provider.dart';
+
 import '../../../components/product_card.dart';
 import '../../../database/PopularProductRepostry.dart';
 import '../../../models/Product.dart';
 import '../../../models/ProductModel.dart';
+import '../../../provider/WishListProvider.dart';
 import '../../../size_config.dart';
 
 class Body extends StatefulWidget {
@@ -49,7 +53,7 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Popular Products'),
+        title: Text('All Products'),
       ),
       body: SafeArea(
         child: Padding(
@@ -75,17 +79,36 @@ class _BodyState extends State<Body> {
               }
               return true;
             },
-            child: GridView.builder(
+            child: isLoading? SizedBox(
+              child:  PlayStoreShimmer( isPurplishMode: true,colors: [Colors.grey],),
+            ): GridView.builder(
                 itemCount: productData.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3, childAspectRatio: 0.6),
                 itemBuilder: (context, index) {
-                  return ProductCard(
-                    id: productData[index].id,
-                    image: productData[index].image,
-                    productName:
-                        productData[index].productName,
-                    rrPrice: productData[index].rrPrice,
+                  return Consumer<WishListProvider>(
+                      builder: (context,wishListItem,child){
+                        return ProductCard(
+                          isFavorite: wishListItem.selectItem.contains(productData[index].id),
+                          onTap: (){
+                            if( wishListItem.selectItem.contains(productData[index].id)){
+                              wishListItem.removeItem(productData[index].id);
+                            }else{
+                              wishListItem.addItem(productData[index].id,WishlistModel(
+                                  id: productData[index].id,
+                                  productName: productData[index].productName,
+                                  price: productData[index].rrPrice,
+                                  image: productData[index].image
+                              ));
+
+                            }
+                          },
+                          id: productData[index].id,
+                          productName: productData[index].productName,
+                          rrPrice: productData[index].rrPrice,
+                          image: productData[index].image,
+                        );
+                      }
                   );
                 }),
           ),

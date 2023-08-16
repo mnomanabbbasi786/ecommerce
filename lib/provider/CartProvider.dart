@@ -9,6 +9,20 @@ class CartProvider extends ChangeNotifier {
 
   List<CartModel> get items => [..._items];
 
+  int _quantity = 1;
+
+  int get quantity => _quantity;
+
+  setQuantity(int productQuantity){
+      _quantity = productQuantity;
+    notifyListeners();
+  }
+
+  delete(String id){
+    CartRepositry.deleteFromCart(id);
+    notifyListeners();
+  }
+
   void addToCart(CartModel item)async {
 
     CartRepositry.addToCart(item);
@@ -17,7 +31,7 @@ class CartProvider extends ChangeNotifier {
   }
 
   fetchItems() async{
-    _items.addAll(await CartRepositry.fetchCartItems());
+    _items = await CartRepositry.fetchCartItems();
     notifyListeners();
   }
 

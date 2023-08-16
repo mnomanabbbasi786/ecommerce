@@ -1,3 +1,4 @@
+import 'package:ecommerce/database/CartRepositry.dart';
 import 'package:ecommerce/provider/CartProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -24,12 +25,11 @@ class _BodyState extends State<Body> {
             itemBuilder: (context, index) => Padding(
               padding: EdgeInsets.symmetric(vertical: 10),
               child: Dismissible(
-                key: Key(cartItems.items[index].id),
+                key: Key(
+                    cartItems.items[index].id), // Use the item ID as the key
                 direction: DismissDirection.endToStart,
-                onDismissed: (direction) {
-                  setState(() {
-                    demoCarts.removeAt(index);
-                  });
+                onDismissed: (direction)  {
+                  cartItems.delete(cartItems.items[index].id);
                 },
                 background: Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),
@@ -45,10 +45,12 @@ class _BodyState extends State<Body> {
                   ),
                 ),
                 child: CartCard(
-                    image: cartItems.items[index].image,
-                    id: cartItems.items[index].id,
-                    productName: cartItems.items[index].productName,
-                    price: cartItems.items[index].price),
+                  image: cartItems.items[index].image,
+                  id: cartItems.items[index].id,
+                  productName: cartItems.items[index].productName,
+                  price: cartItems.items[index].price,
+                  quantity: cartItems.items[index].quantity,
+                ),
               ),
             ),
           );

@@ -1,3 +1,4 @@
+import 'package:add_to_cart_animation/add_to_cart_icon.dart';
 import 'package:ecommerce/models/CartModel.dart';
 import 'package:ecommerce/provider/CartProvider.dart';
 import 'package:flutter/material.dart';
@@ -10,19 +11,30 @@ import 'top_rounded_container.dart';
 import 'product_images.dart';
 
 class Body extends StatelessWidget {
-var id;
-var productName;
-var image;
-var rrPrice;
+  var id;
+  var productName;
+  var image;
+  var rrPrice;
 
-   Body({Key? key, required this.id,required this.rrPrice,required this.image,required this.productName}) : super(key: key);
+
+  Body(
+      {Key? key,
+      required this.id,
+      required this.rrPrice,
+      required this.image,
+      required this.productName,
+      })
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<CartProvider>(context);
     return ListView(
       children: [
-        ProductImages(image: image,id: id,),
+        ProductImages(
+          image: image,
+          id: id,
+        ),
         TopRoundedContainer(
           color: Colors.white,
           child: Column(
@@ -38,7 +50,9 @@ var rrPrice;
                 color: Color(0xFFF6F7F9),
                 child: Column(
                   children: [
-                    ColorDots(),
+                    ColorDots(
+                      id: id,
+                    ),
                     TopRoundedContainer(
                       color: Colors.white,
                       child: Padding(
@@ -50,8 +64,16 @@ var rrPrice;
                         ),
                         child: DefaultButton(
                           text: "Add To Cart",
-                          press: () {
-                            cart.addToCart(CartModel(id: id, productName: productName, price: rrPrice, quantity: 1,image: image));
+                          press: () async {
+                            cart.addToCart(
+                                CartModel(
+                                id: id,
+                                productName: productName,
+                                price: rrPrice,
+                                quantity: ColorDots.quantity,
+                                image: image));
+                            Navigator.pop(context);
+
                           },
                         ),
                       ),

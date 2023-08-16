@@ -6,21 +6,21 @@ import '/models/Cart.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
 
-class CartCard extends StatelessWidget {
-   CartCard({
+class WishlistCard extends StatelessWidget {
+  WishlistCard({
     Key? key,
     required this.id,
-     required this.productName,
-     required this.image,
-     required this.price,
-     required this.quantity
+    required this.productName,
+    required this.image,
+    required this.price,
+
   }) : super(key: key);
 
-var id;
-var productName;
-var image;
-var price;
-var quantity;
+  var id;
+  var productName;
+  var image;
+  var price;
+
 
 
   @override
@@ -52,20 +52,15 @@ var quantity;
             ),
             SizedBox(height: 10),
             Consumer<CartProvider>(
-              builder: (context,cartItems,child){
-                return Text.rich(
-                  TextSpan(
-                    text: "\$${price}",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600, color: kPrimaryColor),
-                    children: [
-                      TextSpan(
-                          text: " x${quantity}",
-                          style: Theme.of(context).textTheme.bodyText1),
-                    ],
-                  ),
-                );
-              }
+                builder: (context,cartItems,child){
+                  return Text.rich(
+                    TextSpan(
+                      text: "\$${price}",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600, color: kPrimaryColor),
+                    ),
+                  );
+                }
             )
           ],
         ),

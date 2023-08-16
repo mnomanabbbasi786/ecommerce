@@ -1,21 +1,51 @@
+import 'package:ecommerce/provider/CartProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '/components/rounded_icon_btn.dart';
 import '/models/Product.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
 
-class ColorDots extends StatelessWidget {
+class ColorDots extends StatefulWidget {
    ColorDots({
     Key? key,
+     required this.id
 
   }) : super(key: key);
 
+   var id;
+   static var quantity=1;
+  @override
+  State<ColorDots> createState() => _ColorDotsState();
+}
+
+class _ColorDotsState extends State<ColorDots> {
+
+
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      ColorDots.quantity=1;
+    });
+
+  }
+
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+
+  }
 
 
   @override
   Widget build(BuildContext context) {
     // Now this is fixed and only for demo
+    final itemQuantity = Provider.of<CartProvider>(context);
    List colors= [
       Color(0xFFF6625E),
       Color(0xFF836DB8),
@@ -38,13 +68,26 @@ class ColorDots extends StatelessWidget {
           Spacer(),
           RoundedIconBtn(
             icon: Icons.remove,
-            press: () {},
+            press: () {
+              setState(() {
+                ColorDots.quantity= ColorDots.quantity-1;
+              });
+              itemQuantity.setQuantity(ColorDots.quantity);
+            },
           ),
+          SizedBox(width: getProportionateScreenWidth(20)),
+          Text('${ ColorDots.quantity}'),
           SizedBox(width: getProportionateScreenWidth(20)),
           RoundedIconBtn(
             icon: Icons.add,
             showShadow: true,
-            press: () {},
+            press: () {
+              setState(() {
+                ColorDots.quantity= ColorDots.quantity+1;
+              });
+
+              itemQuantity.setQuantity( ColorDots.quantity);
+            },
           ),
         ],
       ),

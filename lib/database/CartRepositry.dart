@@ -30,4 +30,13 @@ static  SupabaseClient supabaseClient = SupabaseCredentials.supabaseClient;
       print('Error when adding Item to Cart: $e');
     }
   }
+
+  static deleteFromCart(String id)async{
+   try{
+        await supabaseClient.from('Cart').delete().eq('id', id);
+   }catch(e){
+
+   }
+  }
+
 }

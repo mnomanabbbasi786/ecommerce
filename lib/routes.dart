@@ -1,3 +1,6 @@
+import 'dart:js';
+
+import 'package:ecommerce/screens/wishlsit/WishListScreen.dart';
 import 'package:flutter/widgets.dart';
 import '/screens/cart/cart_screen.dart';
 import '/screens/complete_profile/complete_profile_screen.dart';
@@ -26,4 +29,5 @@ final Map<String, WidgetBuilder> routes = {
   DetailsScreen.routeName: (context) => DetailsScreen(),
   CartScreen.routeName: (context) => CartScreen(),
   ProfileScreen.routeName: (context) => ProfileScreen(),
+  WishListScreen.routeName:(context)=> WishListScreen()
 };

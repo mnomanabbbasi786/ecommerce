@@ -1,6 +1,9 @@
 import 'package:ecommerce/models/ProductModel.dart';
+import 'package:ecommerce/models/WishlistModel.dart';
+import 'package:ecommerce/provider/WishListProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import '/models/Product.dart';
 import '/screens/details/details_screen.dart';
 
@@ -15,12 +18,16 @@ class ProductCard extends StatelessWidget {
     this.id,
     this.productName,
     this.rrPrice,
-    this.image
+    this.image,
+    required this.isFavorite,
+     this.onTap
   }) : super(key: key);
   var id;
   var productName;
   var image;
   var rrPrice;
+  bool isFavorite;
+  dynamic onTap;
   final double width, aspectRetio;
 
   @override
@@ -71,20 +78,20 @@ class ProductCard extends StatelessWidget {
                   ),
                   InkWell(
                     borderRadius: BorderRadius.circular(50),
-                    onTap: () {},
+                    onTap: onTap,
                     child: Container(
                       padding: EdgeInsets.all(getProportionateScreenWidth(8)),
                       height: getProportionateScreenWidth(28),
                       width: getProportionateScreenWidth(28),
                       decoration: BoxDecoration(
-                        color: true
+                        color: isFavorite
                             ? kPrimaryColor.withOpacity(0.15)
                             : kSecondaryColor.withOpacity(0.1),
                         shape: BoxShape.circle,
                       ),
                       child: SvgPicture.asset(
                         "assets/icons/Heart Icon_2.svg",
-                        color: true
+                        color:isFavorite
                             ? Color(0xFFFF4848)
                             : Color(0xFFDBDEE4),
                       ),
