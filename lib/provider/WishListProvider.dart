@@ -30,8 +30,6 @@ class WishListProvider with ChangeNotifier{
 
   fetchWishlistId() async{
     _selectedItem = await WishlistRepostry.fetchWishListID();
-    print('${_selectedItem}');
-
   }
 
   fetchWishlist()async{

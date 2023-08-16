@@ -25,7 +25,7 @@ class _BodyState extends State<Body> {
           return ListView.builder(
             itemCount: wishlistItems.items.length,
             itemBuilder: (context, index) => Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
+              padding: const EdgeInsets.symmetric(vertical: 10),
               child: WishlistCard(
                 image: wishlistItems.items[index].image,
                 id: wishlistItems.items[index].id,
