@@ -1,9 +1,7 @@
-import 'package:ecommerce/database/CartRepositry.dart';
 import 'package:ecommerce/provider/CartProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import '/models/Cart.dart';
 
 import '../../../size_config.dart';
 import 'cart_card.dart';
@@ -23,7 +21,7 @@ class Body extends StatelessWidget {
                 key: Key(
                     cartItems.items[index].id), // Use the item ID as the key
                 direction: DismissDirection.endToStart,
-                onDismissed: (direction)  {
+                onDismissed: (direction) {
                   cartItems.delete(cartItems.items[index].id);
                 },
                 background: Container(

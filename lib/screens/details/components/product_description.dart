@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '/models/Product.dart';
+
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
 
+// ignore: must_be_immutable
 class ProductDescription extends StatelessWidget {
    ProductDescription({
     Key? key,

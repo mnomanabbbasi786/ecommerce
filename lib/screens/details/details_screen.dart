@@ -1,7 +1,7 @@
-import 'package:add_to_cart_animation/add_to_cart_animation.dart';
+
 import 'package:flutter/material.dart';
 
-import '../../models/Product.dart';
+
 import 'components/body.dart';
 import 'components/custom_app_bar.dart';
 

@@ -1,25 +1,24 @@
-
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
-import '../screens/darkmodebutton.dart';
+
 import '/screens/details/details_screen.dart';
+
 import '../constants.dart';
 import '../size_config.dart';
 
+// ignore: must_be_immutable
 class ProductCard extends StatelessWidget {
-   ProductCard({
-    Key? key,
-    this.width = 140,
-    this.aspectRetio = 1.02,
-    this.id,
-    this.productName,
-    this.rrPrice,
-    this.image,
-    required this.isFavorite,
-     this.onTap
-  }) : super(key: key);
+  ProductCard(
+      {Key? key,
+      this.width = 140,
+      this.aspectRetio = 1.02,
+      this.id,
+      this.productName,
+      this.rrPrice,
+      this.image,
+      required this.isFavorite,
+      this.onTap})
+      : super(key: key);
   var id;
   var productName;
   var image;
@@ -30,7 +29,6 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
     return Padding(
       padding: EdgeInsets.only(left: getProportionateScreenWidth(20)),
       child: SizedBox(
@@ -39,7 +37,11 @@ class ProductCard extends StatelessWidget {
           onTap: () => Navigator.pushNamed(
             context,
             DetailsScreen.routeName,
-            arguments: ProductDetailsArguments(rrPrice: rrPrice,productName: productName,image: image,id: id),
+            arguments: ProductDetailsArguments(
+                rrPrice: rrPrice,
+                productName: productName,
+                image: image,
+                id: id),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,18 +56,14 @@ class ProductCard extends StatelessWidget {
                   ),
                   child: Hero(
                     tag: id,
-                    child:CachedNetworkImage(
-                      imageUrl:image,
-                      placeholder: (context, url) => CircularProgressIndicator(),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
-                    ),
+                    child: Image.network(image),
                   ),
                 ),
               ),
               const SizedBox(height: 10),
               Text(
-              productName,
-                style: TextStyle(color: themeProvider.isDark?Colors.white:Colors.black),
+                productName,
+                style: TextStyle(color: Colors.black),
                 maxLines: 2,
               ),
               Row(
@@ -94,9 +92,8 @@ class ProductCard extends StatelessWidget {
                       ),
                       child: SvgPicture.asset(
                         "assets/icons/Heart Icon_2.svg",
-                        color:isFavorite
-                            ? Color(0xFFFF4848)
-                            : Color(0xFFDBDEE4),
+                        color:
+                            isFavorite ? Color(0xFFFF4848) : Color(0xFFDBDEE4),
                       ),
                     ),
                   ),

@@ -2,27 +2,26 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce/provider/CartProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '/models/Cart.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
 
+// ignore: must_be_immutable
 class CartCard extends StatelessWidget {
-   CartCard({
-    Key? key,
-    required this.id,
-     required this.productName,
-     required this.image,
-     required this.price,
-     required this.quantity
-  }) : super(key: key);
+  CartCard(
+      {Key? key,
+      required this.id,
+      required this.productName,
+      required this.image,
+      required this.price,
+      required this.quantity})
+      : super(key: key);
 
-var id;
-var productName;
-var image;
-var price;
-var quantity;
-
+  var id;
+  var productName;
+  var image;
+  var price;
+  var quantity;
 
   @override
   Widget build(BuildContext context) {
@@ -56,22 +55,20 @@ var quantity;
               maxLines: 2,
             ),
             SizedBox(height: 10),
-            Consumer<CartProvider>(
-              builder: (context,cartItems,child){
-                return Text.rich(
-                  TextSpan(
-                    text: "\$${price}",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600, color: kPrimaryColor),
-                    children: [
-                      TextSpan(
-                          text: " x${quantity}",
-                          style: Theme.of(context).textTheme.bodyText1),
-                    ],
-                  ),
-                );
-              }
-            )
+            Consumer<CartProvider>(builder: (context, cartItems, child) {
+              return Text.rich(
+                TextSpan(
+                  text: "\$${price}",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600, color: kPrimaryColor),
+                  children: [
+                    TextSpan(
+                        text: " x${quantity}",
+                        style: Theme.of(context).textTheme.bodyText1),
+                  ],
+                ),
+              );
+            })
           ],
         ),
       ],
