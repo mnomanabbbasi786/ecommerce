@@ -58,7 +58,6 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
   flutter_svg: ^0.22.0 # help us to use SVG in our app
-  provider: ^6.0.0 # for State management
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -74,6 +73,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/imges/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
