@@ -1,15 +1,13 @@
-import 'package:ecommerce/screens/productScreen/PopularProductScreen.dart';
 import 'package:flutter/material.dart';
+
 import '../../../size_config.dart';
 import 'categories.dart';
 import 'discount_banner.dart';
 import 'home_header.dart';
-import 'all_products.dart';
+import 'popular_product.dart';
 import 'special_offers.dart';
 
 class Body extends StatelessWidget {
-  const Body({super.key});
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -17,16 +15,14 @@ class Body extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: getProportionateScreenHeight(20)),
-            const HomeHeader(),
+            HomeHeader(),
             SizedBox(height: getProportionateScreenWidth(10)),
-            const DiscountBanner(),
+            DiscountBanner(),
             Categories(),
-            const SpecialOffers(),
+            SpecialOffers(),
             SizedBox(height: getProportionateScreenWidth(30)),
             PopularProducts(),
             SizedBox(height: getProportionateScreenWidth(30)),
-            const AllProducts(),
-
           ],
         ),
       ),

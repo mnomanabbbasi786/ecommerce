@@ -1,4 +1,3 @@
-
 import 'package:ecommerce/provider/CartProvider.dart';
 import 'package:ecommerce/provider/PopularProductProvider.dart';
 import 'package:ecommerce/provider/WishListProvider.dart';
@@ -18,17 +17,15 @@ void main() async {
   bool seen = prefs.getBool('seen') ?? false;
   String initialRoute = seen ? HomeScreen.routeName : SplashScreen.routeName;
 
-  runApp( MultiProvider(
-      providers: [
+  runApp(MultiProvider(
+    providers: [
       ChangeNotifierProvider(create: (context) => ThemeProvider()),
-        ChangeNotifierProvider(create: (context)=>WishListProvider()),
-        ChangeNotifierProvider(create: (context)=>PopularProductProvider()),
-        ChangeNotifierProvider(create: (context)=>CartProvider())
-      ],
-    child:
-    MyApp(initialRoute: initialRoute),
-  )
-  );
+      ChangeNotifierProvider(create: (context) => WishListProvider()),
+      ChangeNotifierProvider(create: (context) => PopularProductProvider()),
+      ChangeNotifierProvider(create: (context) => CartProvider())
+    ],
+    child: MyApp(initialRoute: initialRoute),
+  ));
 }
 
 class MyApp extends StatelessWidget {
