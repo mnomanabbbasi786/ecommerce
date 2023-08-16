@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../size_config.dart';
+import '../../darkmodebutton.dart';
 
 class SectionTitle extends StatelessWidget {
   const SectionTitle({
@@ -14,6 +16,7 @@ class SectionTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -21,7 +24,7 @@ class SectionTitle extends StatelessWidget {
           title,
           style: TextStyle(
             fontSize: getProportionateScreenWidth(18),
-            color: Colors.black,
+            color: themeProvider.isDark ? Color(0xFFF5F6F9) : Colors.black,
           ),
         ),
         GestureDetector(

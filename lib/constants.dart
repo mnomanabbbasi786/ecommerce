@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '/size_config.dart';
 
+// LIGHT MODE
 const kPrimaryColor = Color(0xFFFF7643);
 const kPrimaryLightColor = Color(0xFFFFECDF);
 const kPrimaryGradientColor = LinearGradient(
@@ -10,6 +11,8 @@ const kPrimaryGradientColor = LinearGradient(
 );
 const kSecondaryColor = Color(0xFF979797);
 const kTextColor = Color(0xFF757575);
+
+// A lighter gray for better visibility on dark backgrounds
 
 const kAnimationDuration = Duration(milliseconds: 200);
 

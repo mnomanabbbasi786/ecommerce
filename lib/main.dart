@@ -1,5 +1,7 @@
+import 'package:ecommerce/screens/darkmodebutton.dart';
 import 'package:ecommerce/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '/routes.dart';
 
@@ -12,7 +14,13 @@ void main() async {
   bool seen = prefs.getBool('seen') ?? false;
   String initialRoute = seen ? HomeScreen.routeName : SplashScreen.routeName;
 
-  runApp(MyApp(initialRoute: initialRoute));
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child:
+          MyApp(initialRoute: initialRoute), // Or your preferred initial route.
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -22,10 +30,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'HSE-ecommerce',
       theme: theme(),
+      darkTheme: darkTheme(),
+      themeMode: themeProvider.themeMode,
       initialRoute: initialRoute,
       routes: routes,
     );

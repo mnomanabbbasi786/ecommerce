@@ -97,3 +97,85 @@ AppBarTheme appBarTheme() {
     ).headline6,
   );
 }
+
+ThemeData darkTheme() {
+  return ThemeData(
+    scaffoldBackgroundColor: Colors.grey[900],
+    fontFamily: "Muli",
+    appBarTheme: darkAppBarTheme(),
+    textTheme: darkTextTheme(),
+    inputDecorationTheme: darkInputDecorationTheme(),
+    visualDensity: VisualDensity.adaptivePlatformDensity,
+  );
+}
+
+InputDecorationTheme darkInputDecorationTheme() {
+  OutlineInputBorder darkOutlineInputBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(28),
+    borderSide: BorderSide(color: Colors.white70),
+    gapPadding: 10,
+  );
+  return InputDecorationTheme(
+    floatingLabelBehavior: FloatingLabelBehavior.always,
+    contentPadding: EdgeInsets.symmetric(horizontal: 42, vertical: 20),
+    enabledBorder: darkOutlineInputBorder,
+    focusedBorder: darkOutlineInputBorder,
+    border: darkOutlineInputBorder,
+  );
+}
+
+TextTheme darkTextTheme() {
+  return TextTheme(
+    headline1: TextStyle(
+      color: Colors.white70,
+      fontFamily: 'Inter',
+      fontSize: 22,
+      fontWeight: FontWeight.w700,
+    ),
+    headline2: TextStyle(
+      color: Colors.white70,
+      fontFamily: 'Inter',
+      fontSize: 17,
+      fontWeight: FontWeight.w700,
+    ),
+    headline3: TextStyle(
+      color: Colors.white70,
+      fontFamily: 'Inter',
+      fontSize: 15,
+      fontWeight: FontWeight.w700,
+    ),
+    bodyText1: TextStyle(
+      color: Colors.white60,
+      fontFamily: 'Inter',
+      fontSize: 17,
+      fontWeight: FontWeight.w500,
+    ),
+    bodyText2: TextStyle(
+      color: Colors.white60,
+      fontFamily: 'Inter',
+      fontSize: 15,
+      fontWeight: FontWeight.w500,
+    ),
+    subtitle1: TextStyle(
+      color: Colors.white38,
+      fontFamily: 'Inter',
+      fontSize: 12,
+      fontWeight: FontWeight.w500,
+    ),
+  );
+}
+
+AppBarTheme darkAppBarTheme() {
+  return AppBarTheme(
+    color: Colors.grey[800],
+    elevation: 0,
+    iconTheme: IconThemeData(color: Colors.white),
+    systemOverlayStyle: SystemUiOverlayStyle.light,
+    toolbarTextStyle: TextTheme(
+      headline6: TextStyle(color: Colors.white70, fontSize: 18),
+    ).bodyText2,
+    titleTextStyle: TextTheme(
+      headline6: TextStyle(color: Colors.white70, fontSize: 18),
+    ).headline6,
+  );
+}

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+import '../screens/darkmodebutton.dart';
 import '/models/Product.dart';
 import '/screens/details/details_screen.dart';
 
@@ -19,6 +21,7 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
     return Padding(
       padding: EdgeInsets.only(left: getProportionateScreenWidth(20)),
       child: SizedBox(
@@ -49,7 +52,8 @@ class ProductCard extends StatelessWidget {
               const SizedBox(height: 10),
               Text(
                 product.title,
-                style: TextStyle(color: Colors.black),
+                style: TextStyle(
+                    color: themeProvider.isDark ? Colors.white : Colors.black),
                 maxLines: 2,
               ),
               Row(

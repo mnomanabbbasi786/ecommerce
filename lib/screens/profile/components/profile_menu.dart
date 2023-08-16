@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 import '../../../constants.dart';
+import '../../darkmodebutton.dart';
 
 class ProfileMenu extends StatelessWidget {
   const ProfileMenu({
@@ -16,6 +18,8 @@ class ProfileMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: TextButton(
@@ -24,7 +28,8 @@ class ProfileMenu extends StatelessWidget {
           padding: EdgeInsets.all(20),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-          backgroundColor: Color(0xFFF5F6F9),
+          backgroundColor:
+              themeProvider.isDark ? Colors.grey[800] : Color(0xFFF5F6F9),
         ),
         onPressed: press,
         child: Row(

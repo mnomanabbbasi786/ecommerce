@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+
+import '../../darkmodebutton.dart';
 
 class ProfilePic extends StatelessWidget {
   const ProfilePic({
@@ -8,6 +11,7 @@ class ProfilePic extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
     return SizedBox(
       height: 115,
       width: 115,
@@ -28,9 +32,12 @@ class ProfilePic extends StatelessWidget {
                 style: TextButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50),
-                    side: BorderSide(color: Colors.white),
+                    side: BorderSide(
+                      color: themeProvider.isDark
+                          ? const Color.fromARGB(255, 165, 163, 163)
+                          : Color(0xFFF5F6F9),
+                    ),
                   ),
-                  primary: Colors.white,
                   backgroundColor: Color(0xFFF5F6F9),
                 ),
                 onPressed: () {},
