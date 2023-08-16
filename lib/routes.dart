@@ -1,3 +1,4 @@
+
 import 'package:ecommerce/screens/notification/notificationTap.dart';
 import 'package:ecommerce/screens/wishlsit/WishListScreen.dart';
 import 'package:flutter/widgets.dart';
@@ -11,7 +12,6 @@ import '/screens/otp/otp_screen.dart';
 import '/screens/profile/profile_screen.dart';
 import '/screens/sign_in/sign_in_screen.dart';
 import '/screens/splash/splash_screen.dart';
-
 import 'screens/sign_up/sign_up_screen.dart';
 
 // We use name route
@@ -28,6 +28,6 @@ final Map<String, WidgetBuilder> routes = {
   DetailsScreen.routeName: (context) => DetailsScreen(),
   CartScreen.routeName: (context) => CartScreen(),
   ProfileScreen.routeName: (context) => ProfileScreen(),
-  WishListScreen.routeName: (context) => WishListScreen(),
+  WishListScreen.routeName:(context)=> WishListScreen(),
   NotitcationTap.routeName: (context) => NotitcationTap(),
 };
