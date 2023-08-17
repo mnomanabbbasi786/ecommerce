@@ -2,6 +2,7 @@ import 'package:ecommerce/models/CartModel.dart';
 import 'package:ecommerce/provider/CartProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../components/fluttertoat.dart';
 import '/components/default_button.dart';
 import '/size_config.dart';
 import 'color_dots.dart';
@@ -69,6 +70,11 @@ class Body extends StatelessWidget {
                                 price: rrPrice,
                                 quantity: ColorDots.quantity,
                                 image: image));
+                            ToastUtil.showCustomToast(
+                              context: context,
+                              message: "Product Add to Cart",
+                              iconData: Icons.done,
+                            );
                             Navigator.pop(context);
                           },
                         ),

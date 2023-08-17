@@ -1,19 +1,20 @@
 import 'dart:convert';
 
+import 'package:ecommerce/components/fluttertoat.dart';
+import 'package:ecommerce/components/product_card.dart';
+import 'package:ecommerce/database/PopularProductRepostry.dart';
+import 'package:ecommerce/models/ProductModel.dart';
+import 'package:ecommerce/models/WishlistModel.dart';
 import 'package:ecommerce/provider/WishListProvider.dart';
+import 'package:ecommerce/screens/home/components/section_title.dart';
 import 'package:ecommerce/screens/productScreen/AllProductScreen.dart';
+import 'package:ecommerce/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shimmer/flutter_shimmer.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../components/fluttertoat.dart';
-import '../../../database/PopularProductRepostry.dart';
-import '../../../models/ProductModel.dart';
-import '../../../models/WishlistModel.dart';
-import '/components/product_card.dart';
-import '../../../size_config.dart';
-import 'section_title.dart';
+
 
 List<ProductModel> product = [];
 bool isLoading = true;
@@ -38,7 +39,7 @@ class _AllProductsState extends State<AllProducts> {
     var response = await PopularProductRepostry.fetchPopularProduct(start, end);
     await PopularProductRepostry.fetchPopularProductLength();
     productData.addAll(response);
-    storeProductData(productData);
+    await storeProductData(productData);
     isLoading = false;
     setState(() {});
   }
@@ -69,6 +70,9 @@ class _AllProductsState extends State<AllProducts> {
       List<ProductModel> storedProducts =
           getProductDataFromPrefs(productDataJson);
       product.addAll(storedProducts);
+      setState(() {
+
+      });
     } catch (error) {
       print('Error storing product data: $error');
     }
@@ -86,8 +90,6 @@ class _AllProductsState extends State<AllProducts> {
 
   @override
   Widget build(BuildContext context) {
-    final wishilistProvider = Provider.of<WishListProvider>(context);
-    wishilistProvider.fetchWishlistId();
     return Column(
       children: [
         Padding(
@@ -113,12 +115,16 @@ class _AllProductsState extends State<AllProducts> {
                   return Consumer<WishListProvider>(
                       builder: (context, wishListItem, child) {
                     return ProductCard(
-                      isFavorite:
-                          wishListItem.selectItem.contains(product[index].id),
+                      isFavorite: true,
                       onTap: () {
                         if (wishListItem.selectItem
                             .contains(product[index].id)) {
                           wishListItem.removeItem(product[index].id);
+                          ToastUtil.showCustomToast(
+                            context: context,
+                            message: "Removed from wishlist",
+                            iconData: Icons.remove_circle_outline,
+                          );
                         } else {
                           wishListItem.addItem(
                               productData[index].id,
@@ -127,13 +133,13 @@ class _AllProductsState extends State<AllProducts> {
                                   productName: product[index].productName,
                                   price: product[index].rrPrice,
                                   image: product[index].image));
+                          ToastUtil.showCustomToast(
+                            context: context,
+                            message: "Added to wish list",
+                            iconData: Icons.done,
+                          );
                         }
 
-                        ToastUtil.showCustomToast(
-                          context: context,
-                          message: "Added to wish list",
-                          iconData: Icons.done,
-                        );
                       },
                       id: product[index].id,
                       productName: product[index].productName,

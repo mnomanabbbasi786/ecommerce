@@ -40,8 +40,12 @@ class WishlistCard extends StatelessWidget {
               ),
               child: CachedNetworkImage(
                 imageUrl: image,
-                placeholder: (context, url) => const CircularProgressIndicator(),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
+                fadeInDuration: const Duration(
+                    seconds: 1), // control the fade in duration
+                placeholder: (context, url) => Container(
+                    color: Colors
+                        .transparent), // transparent container as placeholder
+                errorWidget: (context, url, error) => Icon(Icons.error),
               ),
             ),
           ),
