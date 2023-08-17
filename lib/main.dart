@@ -1,3 +1,5 @@
+
+import 'package:ecommerce/credentials/credentails_auth.dart';
 import 'package:ecommerce/provider/CartProvider.dart';
 import 'package:ecommerce/provider/PopularProductProvider.dart';
 import 'package:ecommerce/provider/WishListProvider.dart';
@@ -13,28 +15,30 @@ import '/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool seen = prefs.getBool('seen') ?? false;
-  String initialRoute = seen ? HomeScreen.routeName : SplashScreen.routeName;
 
-  runApp(MultiProvider(
-    providers: [
+
+  runApp( MultiProvider(
+      providers: [
       ChangeNotifierProvider(create: (context) => ThemeProvider()),
-      ChangeNotifierProvider(create: (context) => WishListProvider()),
-      ChangeNotifierProvider(create: (context) => PopularProductProvider()),
-      ChangeNotifierProvider(create: (context) => CartProvider())
-    ],
-    child: MyApp(initialRoute: initialRoute),
-  ));
+        ChangeNotifierProvider(create: (context)=>WishListProvider()),
+        ChangeNotifierProvider(create: (context)=>PopularProductProvider()),
+        ChangeNotifierProvider(create: (context)=>CartProvider())
+      ],
+    child:
+    MyApp(),
+  )
+  );
 }
 
 class MyApp extends StatelessWidget {
-  final String initialRoute;
 
-  MyApp({required this.initialRoute});
+
+  MyApp();
 
   @override
   Widget build(BuildContext context) {
+    String initialRoute = SupabaseCredentials.supabaseClient.auth.currentUser?.id == null ? SplashScreen.routeName:HomeScreen.routeName;
+
     final themeProvider = Provider.of<ThemeProvider>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,

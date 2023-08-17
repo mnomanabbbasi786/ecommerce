@@ -1,4 +1,7 @@
+import 'package:ecommerce/database/AuthenticationsRepostry.dart';
+import 'package:ecommerce/screens/sign_in/sign_in_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '/components/custom_surfix_icon.dart';
 import '/components/default_button.dart';
 import '/components/form_error.dart';
@@ -19,6 +22,11 @@ class _SignUpFormState extends State<SignUpForm> {
   String? conform_password;
   bool remember = false;
   final List<String?> errors = [];
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
 
   void addError({String? error}) {
     if (!errors.contains(error))
@@ -52,8 +60,9 @@ class _SignUpFormState extends State<SignUpForm> {
             press: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                // if all are valid then go to success screen
-                Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+                AuthenticationsRepostry.createNewCustomer(email: email!, password: password!);
+                Navigator.pushNamed(context, SignInScreen.routeName);
+                // Navigator.pushNamed(context, CompleteProfileScreen.routeName);
               }
             },
           ),

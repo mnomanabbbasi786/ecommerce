@@ -14,13 +14,9 @@ class _LoginSuccessScreenState extends State<LoginSuccessScreen> {
   @override
   void initState() {
     super.initState();
-    _setSeen();
+
   }
 
-  _setSeen() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('seen', true);
-  }
 
   @override
   Widget build(BuildContext context) {

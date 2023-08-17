@@ -78,7 +78,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         }
         return null;
       },
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         labelText: "Address",
         hintText: "Enter your phone address",
         // If  you are using latest version of flutter then lable text and hint text shown like this
@@ -107,7 +107,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         }
         return null;
       },
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         labelText: "Phone Number",
         hintText: "Enter your phone number",
         // If  you are using latest version of flutter then lable text and hint text shown like this
@@ -121,7 +121,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   TextFormField buildLastNameFormField() {
     return TextFormField(
       onSaved: (newValue) => lastName = newValue,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         labelText: "Last Name",
         hintText: "Enter your last name",
         // If  you are using latest version of flutter then lable text and hint text shown like this
@@ -148,7 +148,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         }
         return null;
       },
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         labelText: "First Name",
         hintText: "Enter your first name",
         // If  you are using latest version of flutter then lable text and hint text shown like this
