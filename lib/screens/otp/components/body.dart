@@ -28,7 +28,7 @@ class Body extends StatelessWidget {
                 onTap: () {
                   // OTP code resend
                 },
-                child: Text(
+                child: const Text(
                   "Resend OTP Code",
                   style: TextStyle(decoration: TextDecoration.underline),
                 ),

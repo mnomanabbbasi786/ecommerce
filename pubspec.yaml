@@ -47,7 +47,9 @@ dependencies:
   flutter_launcher_icons: ^0.11.0
   flutter_native_splash: ^2.2.0+1
   cached_network_image: ^3.2.3
-  dio: ^5.3.2
+  animated_bottom_navigation_bar: ^1.2.0
+  auto_size_text: ^3.0.0
+  circular_reveal_animation: ^2.0.1
 
 dev_dependencies:
   flutter_test:
@@ -60,6 +62,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
   flutter_svg: ^0.22.0 # help us to use SVG in our app
+  provider: ^6.0.0 # for State management
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

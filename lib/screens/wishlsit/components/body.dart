@@ -2,7 +2,6 @@ import 'package:ecommerce/provider/WishListProvider.dart';
 import 'package:ecommerce/screens/wishlsit/components/WishlistCard.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../../size_config.dart';
 
 

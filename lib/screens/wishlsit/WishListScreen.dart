@@ -20,7 +20,7 @@ class WishListScreen extends StatelessWidget {
         automaticallyImplyLeading: true,
       ),
       body: Body(),
-      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.favourite),
+      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.favourite,),
     );
   }
 }
