@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_shimmer/flutter_shimmer.dart';
 import 'package:provider/provider.dart';
 
+import '../../../components/fluttertoat.dart';
 import '../../../components/product_card.dart';
 import '../../../database/PopularProductRepostry.dart';
 
@@ -88,18 +89,28 @@ class _BodyState extends State<Body> {
                   return Consumer<WishListProvider>(
                       builder: (context,wishListItem,child){
                         return ProductCard(
-                          isFavorite: wishListItem.selectItem.contains(productData[index].id),
+                          isFavorite: true,
                           onTap: (){
                             if( wishListItem.selectItem.contains(productData[index].id)){
                               wishListItem.removeItem(productData[index].id);
+                              ToastUtil.showCustomToast(
+                                context: context,
+                                message: "Removed from wishlist",
+                                iconData: Icons.remove_circle_outline,
+                              );
                             }else{
                               wishListItem.addItem(productData[index].id,WishlistModel(
                                   id: productData[index].id,
                                   productName: productData[index].productName,
                                   price: productData[index].rrPrice,
                                   image: productData[index].image
-                              ));
 
+                              ));
+                              ToastUtil.showCustomToast(
+                                context: context,
+                                message: "Added to wish list",
+                                iconData: Icons.done,
+                              );
                             }
                           },
                           id: productData[index].id,

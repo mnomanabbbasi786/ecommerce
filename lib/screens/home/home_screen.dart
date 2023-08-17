@@ -13,14 +13,7 @@ class HomeScreen extends StatelessWidget {
     SizeConfig().init(context);
     return  Scaffold(
       body: Body(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
 
-          onPressed: (){
-
-          },
-        child: Icon(Icons.home_filled),
-      ),
       bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.home),
     );
   }
