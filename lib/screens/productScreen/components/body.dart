@@ -1,12 +1,11 @@
 import 'package:ecommerce/models/WishlistModel.dart';
-import 'package:ecommerce/provider/PopularProductProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shimmer/flutter_shimmer.dart';
 import 'package:provider/provider.dart';
 
 import '../../../components/product_card.dart';
 import '../../../database/PopularProductRepostry.dart';
-import '../../../models/Product.dart';
+
 import '../../../models/ProductModel.dart';
 import '../../../provider/WishListProvider.dart';
 import '../../../size_config.dart';
@@ -53,7 +52,7 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('All Products'),
+        title: const Text('All Products'),
       ),
       body: SafeArea(
         child: Padding(
@@ -79,7 +78,7 @@ class _BodyState extends State<Body> {
               }
               return true;
             },
-            child: isLoading? SizedBox(
+            child: isLoading? const SizedBox(
               child:  PlayStoreShimmer( isPurplishMode: true,colors: [Colors.grey],),
             ): GridView.builder(
                 itemCount: productData.length,
