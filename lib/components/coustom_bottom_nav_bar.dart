@@ -17,6 +17,22 @@ class CustomBottomNavBar extends StatelessWidget {
   }) : super(key: key);
 
   final MenuState selectedMenu;
+  void navigateTo(BuildContext context, String routeName, Widget screen) {
+    if (Navigator.canPop(context)) {
+      Navigator.popUntil(context, (route) {
+        if (route.settings.name == routeName) {
+          // If we found the route, don't pop anymore.
+          return true;
+        }
+        // Continue popping.
+        return false;
+      });
+    }
+    if (ModalRoute.of(context)?.settings.name != routeName) {
+      // If current route isn't the desired route, push it onto the stack.
+      Navigator.pushNamed(context, routeName);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +72,7 @@ class CustomBottomNavBar extends StatelessWidget {
                   ),
                   onPressed: () {
                     if (!isCurrentRoute(HomeScreen.routeName)) {
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, HomeScreen.routeName);
+                      navigateTo(context, HomeScreen.routeName, HomeScreen());
                     } else {
                       ToastUtil.showCustomToast(
                           message: "Already on that screen",
@@ -72,7 +87,8 @@ class CustomBottomNavBar extends StatelessWidget {
                       : inActiveIconColor,
                   onPressed: () {
                     if (!isCurrentRoute(WishListScreen.routeName)) {
-                      Navigator.pushNamed(context, WishListScreen.routeName);
+                      navigateTo(
+                          context, WishListScreen.routeName, WishListScreen());
                     } else {
                       ToastUtil.showCustomToast(
                           message: "Already on that screen",
@@ -93,7 +109,8 @@ class CustomBottomNavBar extends StatelessWidget {
                   ),
                   onPressed: () {
                     if (!isCurrentRoute(ProfileScreen.routeName)) {
-                      Navigator.pushNamed(context, ProfileScreen.routeName);
+                      navigateTo(
+                          context, ProfileScreen.routeName, ProfileScreen());
                     } else {
                       ToastUtil.showCustomToast(
                           message: "Already on that screen",

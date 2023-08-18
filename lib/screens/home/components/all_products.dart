@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:ecommerce/components/product_card.dart';
 import 'package:ecommerce/database/PopularProductRepostry.dart';
 import 'package:ecommerce/models/ProductModel.dart';
@@ -7,7 +6,7 @@ import 'package:ecommerce/screens/productScreen/AllProductScreen.dart';
 import 'package:ecommerce/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shimmer/flutter_shimmer.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:sentry/sentry.dart';
 
 List<ProductModel> product = [];
@@ -41,14 +40,20 @@ class _AllProductsState extends State<AllProducts> {
   @override
   void initState() {
     super.initState();
-
+    print(product);
     if (product.isEmpty) {
+      print("emoty");
       fetchPopularProducts();
     }
     Sentry.configureScope((scope) {
       scope.setTag('widget', 'AllProducts');
       // add any other relevant info
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -75,40 +80,6 @@ class _AllProductsState extends State<AllProducts> {
               ...List.generate(
                 product.length,
                 (index) {
-                  return Consumer<WishListProvider>(
-                      builder: (context, wishListItem, child) {
-                    return ProductCard(
-                      isFavorite: true,
-                      onTap: () {
-                        if (wishListItem.selectItem
-                            .contains(product[index].id)) {
-                          wishListItem.removeItem(product[index].id);
-                          ToastUtil.showCustomToast(
-                            context: context,
-                            message: "Removed from wishlist",
-                            iconData: Icons.remove_circle_outline,
-                          );
-                        } else {
-                          wishListItem.addItem(
-                              productData[index].id,
-                              WishlistModel(
-                                  id: product[index].id,
-                                  productName: product[index].productName,
-                                  price: product[index].rrPrice,
-                                  image: product[index].image));
-                          ToastUtil.showCustomToast(
-                            context: context,
-                            message: "Added to wish list",
-                            iconData: Icons.done,
-                          );
-                        }
-                      },
-                      id: product[index].id,
-                      productName: product[index].productName,
-                      rrPrice: product[index].rrPrice,
-                      image: product[index].image,
-                    );
-                  });
                   return ProductCard(
                     id: product[index].id,
                     productName: product[index].productName,

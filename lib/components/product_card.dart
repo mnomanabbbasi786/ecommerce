@@ -31,8 +31,9 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
-    final wishListprovider = Provider.of<WishListProvider>(context,listen: false);
-    print('build');
+    final wishListprovider =
+        Provider.of<WishListProvider>(context, listen: false);
+
     return Padding(
       padding: EdgeInsets.only(left: getProportionateScreenWidth(20)),
       child: SizedBox(
@@ -62,16 +63,13 @@ class ProductCard extends StatelessWidget {
                       tag: id,
                       child: CachedNetworkImage(
                         imageUrl: image,
-                        fadeInDuration: Duration(
-                            seconds: 1), // control the fade in duration
-                        placeholder: (context, url) => Container(
-                            color: Colors
-                                .transparent), // transparent container as placeholder
+                        fadeInDuration: Duration(seconds: 1),
+                        placeholder: (context, url) =>
+                            Container(color: Colors.transparent),
                         errorWidget: (context, url, error) => Icon(Icons.error),
                       )),
                 ),
               ),
-
               const SizedBox(height: 10),
               Text(
                 productName,
@@ -92,16 +90,17 @@ class ProductCard extends StatelessWidget {
                   ),
                   InkWell(
                     borderRadius: BorderRadius.circular(50),
-                    onTap: (){
-                      if(wishListprovider.selectItem.contains(id)){
+                    onTap: () {
+                      if (wishListprovider.selectItem.contains(id)) {
                         wishListprovider.removeItem(id);
                         ToastUtil.showCustomToast(
                           context: context,
                           message: "Removed from wishlist",
                           iconData: Icons.remove_circle_outline,
                         );
-                      }else{
-                        wishListprovider.addItem(id,
+                      } else {
+                        wishListprovider.addItem(
+                            id,
                             WishlistModel(
                                 id: id,
                                 productName: productName,
@@ -115,25 +114,25 @@ class ProductCard extends StatelessWidget {
                       }
                     },
                     child: Consumer<WishListProvider>(
-                      builder: (context,wishlistId,child){
-                        return Container(
-                          padding: EdgeInsets.all(getProportionateScreenWidth(8)),
-                          height: getProportionateScreenWidth(28),
-                          width: getProportionateScreenWidth(28),
-                          decoration: BoxDecoration(
-                            color: wishlistId.selectItem.contains(id)
-                                ? kPrimaryColor.withOpacity(0.15)
-                                : kSecondaryColor.withOpacity(0.1),
-                            shape: BoxShape.circle,
-                          ),
-                          child: SvgPicture.asset(
-                            "assets/icons/Heart Icon_2.svg",
-                            color:
-                            wishlistId.selectItem.contains(id) ? Color(0xFFFF4848) : Color(0xFFDBDEE4),
-                          ),
-                        );
-                      }
-                    ),
+                        builder: (context, wishlistId, child) {
+                      return Container(
+                        padding: EdgeInsets.all(getProportionateScreenWidth(8)),
+                        height: getProportionateScreenWidth(28),
+                        width: getProportionateScreenWidth(28),
+                        decoration: BoxDecoration(
+                          color: wishlistId.selectItem.contains(id)
+                              ? kPrimaryColor.withOpacity(0.15)
+                              : kSecondaryColor.withOpacity(0.1),
+                          shape: BoxShape.circle,
+                        ),
+                        child: SvgPicture.asset(
+                          "assets/icons/Heart Icon_2.svg",
+                          color: wishlistId.selectItem.contains(id)
+                              ? Color(0xFFFF4848)
+                              : Color(0xFFDBDEE4),
+                        ),
+                      );
+                    }),
                   ),
                 ],
               )

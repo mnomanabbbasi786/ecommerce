@@ -1,9 +1,9 @@
 import 'package:ecommerce/database/WishlistRepostry.dart';
-import 'package:ecommerce/provider/WishListProvider.dart';
+
 import 'package:ecommerce/screens/wishlsit/components/WishlistCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shimmer/flutter_shimmer.dart';
-import 'package:provider/provider.dart';
+
 import 'package:sentry_flutter/sentry_flutter.dart';
 import '../../../size_config.dart';
 
@@ -22,6 +22,11 @@ class _BodyState extends State<Body> {
       scope.setTag('widget', 'WishList');
       // add any other relevant info
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
