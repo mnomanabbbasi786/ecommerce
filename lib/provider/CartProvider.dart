@@ -23,15 +23,15 @@ class CartProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addToCart(CartModel item)async {
+  void addToCart({required CartModel item})async {
 
-    CartRepositry.addToCart(item);
+    CartRepositry.addToCart(item: item);
 
     notifyListeners();
   }
 
-  fetchItems() async{
-    _items = await CartRepositry.fetchCartItems();
+  fetchItems({required userId}) async{
+    _items = await CartRepositry.fetchCartItems(userID: userId );
     notifyListeners();
   }
 

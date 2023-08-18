@@ -6,7 +6,6 @@ import 'package:ecommerce/screens/darkmodebutton.dart';
 import 'package:ecommerce/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '/routes.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import '/screens/splash/splash_screen.dart';

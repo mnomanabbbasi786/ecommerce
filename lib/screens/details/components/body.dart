@@ -1,3 +1,5 @@
+import 'package:ecommerce/credentials/credentails_auth.dart';
+import 'package:ecommerce/database/AuthenticationsRepostry.dart';
 import 'package:ecommerce/models/CartModel.dart';
 import 'package:ecommerce/provider/CartProvider.dart';
 import 'package:flutter/material.dart';
@@ -64,11 +66,13 @@ class Body extends StatelessWidget {
                         child: DefaultButton(
                           text: "Add To Cart",
                           press: () async {
-                            cart.addToCart(CartModel(
+                            cart.addToCart(item: CartModel(
                                 id: id,
                                 productName: productName,
                                 price: rrPrice,
                                 quantity: ColorDots.quantity,
+                                productId: id,
+                                userID: SupabaseCredentials.supabaseClient.auth.currentUser!.id,
                                 image: image));
                             ToastUtil.showCustomToast(
                               context: context,

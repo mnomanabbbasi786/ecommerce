@@ -25,14 +25,14 @@ class WishListProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // fetchWishlistId() async {
-  //   _selectedItem = await WishlistRepostry.fetchWishListID();
-  //   print('${_selectedItem}');
-  // }
+  fetchWishlistId() async {
+    _selectedItem = await WishlistRepostry.fetchWishListID();
+    print('${_selectedItem}');
+  }
 
   fetchWishlist() async {
     _items = await WishlistRepostry.fetchWishList();
-
+    print('favourite');
     notifyListeners();
   }
 }

@@ -21,7 +21,7 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
 
   int start = 0;
-  int end = 50;
+  int end = 20;
   bool isLoading = true;
 
   List<ProductModel> productData = [];
@@ -86,39 +86,11 @@ class _BodyState extends State<Body> {
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3, childAspectRatio: 0.6),
                 itemBuilder: (context, index) {
-                  return Consumer<WishListProvider>(
-                      builder: (context,wishListItem,child){
-                        return ProductCard(
-                          isFavorite: true,
-                          onTap: (){
-                            if( wishListItem.selectItem.contains(productData[index].id)){
-                              wishListItem.removeItem(productData[index].id);
-                              ToastUtil.showCustomToast(
-                                context: context,
-                                message: "Removed from wishlist",
-                                iconData: Icons.remove_circle_outline,
-                              );
-                            }else{
-                              wishListItem.addItem(productData[index].id,WishlistModel(
-                                  id: productData[index].id,
-                                  productName: productData[index].productName,
-                                  price: productData[index].rrPrice,
-                                  image: productData[index].image
-
-                              ));
-                              ToastUtil.showCustomToast(
-                                context: context,
-                                message: "Added to wish list",
-                                iconData: Icons.done,
-                              );
-                            }
-                          },
-                          id: productData[index].id,
-                          productName: productData[index].productName,
-                          rrPrice: productData[index].rrPrice,
-                          image: productData[index].image,
-                        );
-                      }
+                  return ProductCard(
+                    id: productData[index].id,
+                    productName: productData[index].productName,
+                    rrPrice: productData[index].rrPrice,
+                    image: productData[index].image,
                   );
                 }),
           ),
