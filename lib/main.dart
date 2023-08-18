@@ -1,4 +1,5 @@
 import 'package:ecommerce/credentials/credentails_auth.dart';
+import 'package:ecommerce/database/AuthenticationsRepostry.dart';
 import 'package:ecommerce/provider/CartProvider.dart';
 import 'package:ecommerce/provider/WishListProvider.dart';
 import 'package:ecommerce/screens/darkmodebutton.dart';
@@ -13,13 +14,12 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Supabase.initialize(
+  await Supabase.initialize(
       url: SupabaseCredentials.APIurl, anonKey: SupabaseCredentials.APIKey);
 
-  String initialRoute = Supabase.instance.client.auth.currentUser?.id == null
-      ? SplashScreen.routeName
-      : HomeScreen.routeName;
-  print(SupabaseCredentials.supabaseClient.auth.currentUser?.id);
+  String? userId = await AuthenticationsRepostry.getUserIdFromPrefs();
+  String initialRoute =
+      (userId == null) ? SplashScreen.routeName : HomeScreen.routeName;
   await SentryFlutter.init(
     (options) {
       options.dsn =

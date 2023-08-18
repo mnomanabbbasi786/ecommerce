@@ -20,7 +20,6 @@ class _BodyState extends State<Body> {
     super.initState();
     Sentry.configureScope((scope) {
       scope.setTag('widget', 'WishList');
-      // add any other relevant info
     });
   }
 

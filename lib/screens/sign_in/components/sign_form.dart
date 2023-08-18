@@ -75,8 +75,8 @@ class _SignFormState extends State<SignForm> {
             press: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                AuthenticationsRepostry.singInUser(context,email: email!, password: password!);
-
+                AuthenticationsRepostry.signInUser(context,
+                    email: email!, password: password!);
               }
             },
           ),
