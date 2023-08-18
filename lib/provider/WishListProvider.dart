@@ -14,12 +14,14 @@ class WishListProvider with ChangeNotifier {
   addItem(String id, WishlistModel wishlistModel) async {
     _selectedItem.add(id);
     await WishlistRepostry.addToWishList(wishlistModel);
+
     notifyListeners();
   }
 
   removeItem(String id) async {
     _selectedItem.remove(id);
     await WishlistRepostry.deleteWishlistItem(id);
+
     notifyListeners();
   }
 

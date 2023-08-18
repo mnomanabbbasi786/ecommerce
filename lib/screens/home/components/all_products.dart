@@ -13,8 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_shimmer/flutter_shimmer.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-
+import 'package:sentry/sentry.dart';
 
 List<ProductModel> product = [];
 bool isLoading = true;
@@ -25,7 +24,6 @@ class AllProducts extends StatefulWidget {
   @override
   State<AllProducts> createState() => _AllProductsState();
 }
-
 
 class _AllProductsState extends State<AllProducts> {
   int start = 0;
@@ -38,54 +36,24 @@ class _AllProductsState extends State<AllProducts> {
   fetchPopularProducts() async {
     var response = await PopularProductRepostry.fetchPopularProduct(start, end);
     await PopularProductRepostry.fetchPopularProductLength();
+
     productData.addAll(response);
-    await storeProductData(productData);
-    isLoading = false;
+    product = productData;
+
     setState(() {});
-  }
-
-  String serializeProductData(List<ProductModel> products) {
-    // Convert the list of ProductModel objects to a list of maps (JSON-like format)
-    List<Map<String, dynamic>> productJsonList =
-        products.map((product) => product.toJson()).toList();
-
-    // Convert the list of maps to a JSON string
-    return json.encode(productJsonList);
-  }
-
-  List<ProductModel> getProductDataFromPrefs(String? productDataJson) {
-    final List<dynamic> productJsonList = json.decode(productDataJson!);
-    List<ProductModel> products = productJsonList
-        .map((productJson) => ProductModel.fromJson(productJson))
-        .toList();
-    return products;
-  }
-
-  storeProductData(List<ProductModel> products) async {
-    try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-
-      String productDataJson = serializeProductData(products);
-      prefs.setString('productData', productDataJson);
-      List<ProductModel> storedProducts =
-          getProductDataFromPrefs(productDataJson);
-      product.addAll(storedProducts);
-      setState(() {
-
-      });
-    } catch (error) {
-      print('Error storing product data: $error');
-    }
   }
 
   @override
   void initState() {
     super.initState();
-    print("products $product");
 
     if (product.isEmpty) {
       fetchPopularProducts();
     }
+    Sentry.configureScope((scope) {
+      scope.setTag('widget', 'AllProducts');
+      // add any other relevant info
+    });
   }
 
   @override
@@ -139,7 +107,6 @@ class _AllProductsState extends State<AllProducts> {
                             iconData: Icons.done,
                           );
                         }
-
                       },
                       id: product[index].id,
                       productName: product[index].productName,

@@ -1,6 +1,7 @@
 import 'package:ecommerce/screens/productScreen/PopularProductScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../components/error.dart';
 import '../../../provider/WishListProvider.dart';
 import '../../../size_config.dart';
 import 'categories.dart';
@@ -27,7 +28,7 @@ class Body extends StatelessWidget {
             SizedBox(height: getProportionateScreenWidth(30)),
             PopularProducts(),
             SizedBox(height: getProportionateScreenWidth(30)),
-            const AllProducts(),
+            ErrorBoundary(child: const AllProducts()),
           ],
         ),
       ),

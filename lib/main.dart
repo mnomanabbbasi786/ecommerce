@@ -1,7 +1,6 @@
-
 import 'package:ecommerce/credentials/credentails_auth.dart';
 import 'package:ecommerce/provider/CartProvider.dart';
-import 'package:ecommerce/provider/PopularProductProvider.dart';
+
 import 'package:ecommerce/provider/WishListProvider.dart';
 import 'package:ecommerce/screens/darkmodebutton.dart';
 import 'package:ecommerce/screens/home/home_screen.dart';
@@ -9,35 +8,46 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '/routes.dart';
-
+import 'package:sentry_flutter/sentry_flutter.dart';
 import '/screens/splash/splash_screen.dart';
 import '/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Determine the initial route based on the current user status.
+  String initialRoute =
+      SupabaseCredentials.supabaseClient.auth.currentUser?.id == null
+          ? SplashScreen.routeName
+          : HomeScreen.routeName;
 
-  runApp( MultiProvider(
+  await SentryFlutter.init(
+    (options) {
+      options.dsn =
+          'https://9e32abe50c0bcffd9a4446b20883f857@o4505724548022272.ingest.sentry.io/4505724557918208';
+      options.tracesSampleRate = 1.0;
+    },
+    appRunner: () => runApp(MultiProvider(
       providers: [
-      ChangeNotifierProvider(create: (context) => ThemeProvider()),
-        ChangeNotifierProvider(create: (context)=>WishListProvider()),
-        ChangeNotifierProvider(create: (context)=>PopularProductProvider()),
-        ChangeNotifierProvider(create: (context)=>CartProvider())
+        ChangeNotifierProvider(create: (context) => ThemeProvider()),
+        ChangeNotifierProvider(create: (context) => WishListProvider()),
+        ChangeNotifierProvider(create: (context) => CartProvider())
       ],
-    child:
-    MyApp(),
-  )
+      child: MyApp(initialRoute: initialRoute),
+    )),
   );
 }
 
 class MyApp extends StatelessWidget {
+  final String initialRoute;
 
-
-  MyApp();
-
+  MyApp({required this.initialRoute});
   @override
   Widget build(BuildContext context) {
-    String initialRoute = SupabaseCredentials.supabaseClient.auth.currentUser?.id == null ? SplashScreen.routeName:HomeScreen.routeName;
+    String initialRoute =
+        SupabaseCredentials.supabaseClient.auth.currentUser?.id == null
+            ? SplashScreen.routeName
+            : HomeScreen.routeName;
 
     final themeProvider = Provider.of<ThemeProvider>(context);
     return MaterialApp(

@@ -56,6 +56,7 @@ class CustomBottomNavBar extends StatelessWidget {
                   ),
                   onPressed: () {
                     if (!isCurrentRoute(HomeScreen.routeName)) {
+                      Navigator.pop(context);
                       Navigator.pushNamed(context, HomeScreen.routeName);
                     } else {
                       ToastUtil.showCustomToast(

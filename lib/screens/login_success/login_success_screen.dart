@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'components/body.dart';
 
@@ -14,9 +13,7 @@ class _LoginSuccessScreenState extends State<LoginSuccessScreen> {
   @override
   void initState() {
     super.initState();
-
   }
-
 
   @override
   Widget build(BuildContext context) {
