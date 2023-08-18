@@ -25,7 +25,7 @@ class Body extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text(
+                const Text(
                   "Sign in with your email and password  \nor continue with social media",
                   textAlign: TextAlign.center,
                 ),
@@ -50,7 +50,7 @@ class Body extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: getProportionateScreenHeight(20)),
-                NoAccountText(),
+                const NoAccountText(),
               ],
             ),
           ),

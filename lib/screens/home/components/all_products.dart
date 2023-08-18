@@ -1,17 +1,12 @@
 import 'dart:convert';
-
-import 'package:ecommerce/components/fluttertoat.dart';
 import 'package:ecommerce/components/product_card.dart';
 import 'package:ecommerce/database/PopularProductRepostry.dart';
 import 'package:ecommerce/models/ProductModel.dart';
-import 'package:ecommerce/models/WishlistModel.dart';
-import 'package:ecommerce/provider/WishListProvider.dart';
 import 'package:ecommerce/screens/home/components/section_title.dart';
 import 'package:ecommerce/screens/productScreen/AllProductScreen.dart';
 import 'package:ecommerce/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shimmer/flutter_shimmer.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -29,7 +24,7 @@ class AllProducts extends StatefulWidget {
 
 class _AllProductsState extends State<AllProducts> {
   int start = 0;
-  int end = 50;
+  int end = 20;
 
   List<ProductModel> productData = [];
 
@@ -39,44 +34,44 @@ class _AllProductsState extends State<AllProducts> {
     var response = await PopularProductRepostry.fetchPopularProduct(start, end);
     await PopularProductRepostry.fetchPopularProductLength();
     productData.addAll(response);
-    await storeProductData(productData);
+   product = productData;
     isLoading = false;
     setState(() {});
   }
 
-  String serializeProductData(List<ProductModel> products) {
-    // Convert the list of ProductModel objects to a list of maps (JSON-like format)
-    List<Map<String, dynamic>> productJsonList =
-        products.map((product) => product.toJson()).toList();
-
-    // Convert the list of maps to a JSON string
-    return json.encode(productJsonList);
-  }
-
-  List<ProductModel> getProductDataFromPrefs(String? productDataJson) {
-    final List<dynamic> productJsonList = json.decode(productDataJson!);
-    List<ProductModel> products = productJsonList
-        .map((productJson) => ProductModel.fromJson(productJson))
-        .toList();
-    return products;
-  }
-
-  storeProductData(List<ProductModel> products) async {
-    try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-
-      String productDataJson = serializeProductData(products);
-      prefs.setString('productData', productDataJson);
-      List<ProductModel> storedProducts =
-          getProductDataFromPrefs(productDataJson);
-      product.addAll(storedProducts);
-      setState(() {
-
-      });
-    } catch (error) {
-      print('Error storing product data: $error');
-    }
-  }
+  // String serializeProductData(List<ProductModel> products) {
+  //   // Convert the list of ProductModel objects to a list of maps (JSON-like format)
+  //   List<Map<String, dynamic>> productJsonList =
+  //       products.map((product) => product.toJson()).toList();
+  //
+  //   // Convert the list of maps to a JSON string
+  //   return json.encode(productJsonList);
+  // }
+  //
+  // List<ProductModel> getProductDataFromPrefs(String? productDataJson) {
+  //   final List<dynamic> productJsonList = json.decode(productDataJson!);
+  //   List<ProductModel> products = productJsonList
+  //       .map((productJson) => ProductModel.fromJson(productJson))
+  //       .toList();
+  //   return products;
+  // }
+  //
+  // storeProductData(List<ProductModel> products) async {
+  //   try {
+  //     SharedPreferences prefs = await SharedPreferences.getInstance();
+  //
+  //     String productDataJson = serializeProductData(products);
+  //     prefs.setString('productData', productDataJson);
+  //     List<ProductModel> storedProducts =
+  //         getProductDataFromPrefs(productDataJson);
+  //     product.addAll(storedProducts);
+  //     setState(() {
+  //
+  //     });
+  //   } catch (error) {
+  //     print('Error storing product data: $error');
+  //   }
+  // }
 
   @override
   void initState() {
@@ -112,48 +107,19 @@ class _AllProductsState extends State<AllProducts> {
               ...List.generate(
                 product.length,
                 (index) {
-                  return Consumer<WishListProvider>(
-                      builder: (context, wishListItem, child) {
-                    return ProductCard(
-                      isFavorite: true,
-                      onTap: () {
-                        if (wishListItem.selectItem
-                            .contains(product[index].id)) {
-                          wishListItem.removeItem(product[index].id);
-                          ToastUtil.showCustomToast(
-                            context: context,
-                            message: "Removed from wishlist",
-                            iconData: Icons.remove_circle_outline,
-                          );
-                        } else {
-                          wishListItem.addItem(
-                              productData[index].id,
-                              WishlistModel(
-                                  id: product[index].id,
-                                  productName: product[index].productName,
-                                  price: product[index].rrPrice,
-                                  image: product[index].image));
-                          ToastUtil.showCustomToast(
-                            context: context,
-                            message: "Added to wish list",
-                            iconData: Icons.done,
-                          );
-                        }
-
-                      },
-                      id: product[index].id,
-                      productName: product[index].productName,
-                      rrPrice: product[index].rrPrice,
-                      image: product[index].image,
-                    );
-                  });
+                  return ProductCard(
+                    id: product[index].id,
+                    productName: product[index].productName,
+                    rrPrice: product[index].rrPrice,
+                    image: product[index].image,
+                  );
                 },
               ),
               SizedBox(width: getProportionateScreenWidth(20)),
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                 child: Container(
-                  margin: EdgeInsets.symmetric(
+                  margin: const EdgeInsets.symmetric(
                       horizontal: 10.0), // space around the button
                   decoration: BoxDecoration(
                     color: Colors.orange, // background color
@@ -163,11 +129,11 @@ class _AllProductsState extends State<AllProducts> {
                       // shadow to give 3D effect
                       BoxShadow(
                         color: Colors.deepOrange.withOpacity(0.5),
-                        offset: Offset(5, 5),
+                        offset: const Offset(5, 5),
                         blurRadius: 10,
                         spreadRadius: 2,
                       ),
-                      BoxShadow(
+                      const BoxShadow(
                         color: Colors.white,
                         offset: Offset(-5, -5),
                         blurRadius: 10,
@@ -176,7 +142,7 @@ class _AllProductsState extends State<AllProducts> {
                     ],
                   ),
                   child: IconButton(
-                    icon: Icon(Icons.arrow_forward,
+                    icon: const Icon(Icons.arrow_forward,
                         color: Colors.white), // icon color
                     onPressed: () {
                       Navigator.push(

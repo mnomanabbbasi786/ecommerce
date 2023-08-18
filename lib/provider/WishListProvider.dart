@@ -14,23 +14,26 @@ class WishListProvider with ChangeNotifier {
   addItem(String id, WishlistModel wishlistModel) async {
     _selectedItem.add(id);
     await WishlistRepostry.addToWishList(wishlistModel);
+    print('favourite');
     notifyListeners();
+
   }
 
   removeItem(String id) async {
     _selectedItem.remove(id);
     await WishlistRepostry.deleteWishlistItem(id);
+    print('favourite');
     notifyListeners();
   }
 
-  // fetchWishlistId() async {
-  //   _selectedItem = await WishlistRepostry.fetchWishListID();
-  //   print('${_selectedItem}');
-  // }
+  fetchWishlistId() async {
+    _selectedItem = await WishlistRepostry.fetchWishListID();
+    print('${_selectedItem}');
+  }
 
   fetchWishlist() async {
     _items = await WishlistRepostry.fetchWishList();
-
+    print('favourite');
     notifyListeners();
   }
 }

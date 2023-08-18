@@ -3,8 +3,10 @@ import 'package:ecommerce/credentials/credentails_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../components/fluttertoat.dart';
 import '../helper/keyboard.dart';
 import '../screens/login_success/login_success_screen.dart';
+import 'package:flutter/material.dart';
 
 class AuthenticationsRepostry{
  static SupabaseClient supabaseClient = SupabaseCredentials.supabaseClient;
@@ -42,6 +44,10 @@ class AuthenticationsRepostry{
         final User? user = res.user;
         if(user!.email!.contains(email)){
           print('SignIn successful');
+          ToastUtil.showCustomToast(
+              message: 'SignIn successful',
+              iconData:Icons.person,
+              context: context);
           KeyboardUtil.hideKeyboard(context);
           Navigator.pushNamed(context, LoginSuccessScreen.routeName);
         }else{
@@ -49,6 +55,10 @@ class AuthenticationsRepostry{
         }
 
       }catch (e){
+        ToastUtil.showCustomToast(
+            message: '$e',
+            iconData:Icons.person,
+            context: context);
         print('Error when Signing an account:$e');
       }
   }

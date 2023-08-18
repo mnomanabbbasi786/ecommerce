@@ -8,10 +8,10 @@ class CartRepositry{
   
 static  SupabaseClient supabaseClient = SupabaseCredentials.supabaseClient;
   
- static Future<List<CartModel>> fetchCartItems()async{
+ static Future<List<CartModel>> fetchCartItems({required String userID})async{
     try{
           final response = await supabaseClient.from('Cart')
-              .select().execute();
+              .select().eq('user_id', userID).execute();
           List<CartModel> items = (response.data as List)
           .map((e) => CartModel.fromJson(e)).toList();
 
@@ -22,7 +22,7 @@ static  SupabaseClient supabaseClient = SupabaseCredentials.supabaseClient;
     }
   }
 
- static addToCart(CartModel item)async{
+ static addToCart({required CartModel item})async{
     try{
         await supabaseClient.from('Cart').insert(item).execute();
 

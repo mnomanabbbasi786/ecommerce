@@ -7,9 +7,7 @@ import 'package:ecommerce/screens/darkmodebutton.dart';
 import 'package:ecommerce/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '/routes.dart';
-
 import '/screens/splash/splash_screen.dart';
 import '/theme.dart';
 
@@ -19,13 +17,12 @@ void main() async {
 
   runApp( MultiProvider(
       providers: [
-      ChangeNotifierProvider(create: (context) => ThemeProvider()),
+        ChangeNotifierProvider(create: (context) => ThemeProvider()),
         ChangeNotifierProvider(create: (context)=>WishListProvider()),
         ChangeNotifierProvider(create: (context)=>PopularProductProvider()),
         ChangeNotifierProvider(create: (context)=>CartProvider())
       ],
-    child:
-    MyApp(),
+    child: const MyApp(),
   )
   );
 }
@@ -33,10 +30,11 @@ void main() async {
 class MyApp extends StatelessWidget {
 
 
-  MyApp();
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    print(SupabaseCredentials.supabaseClient.auth.currentUser?.id);
     String initialRoute = SupabaseCredentials.supabaseClient.auth.currentUser?.id == null ? SplashScreen.routeName:HomeScreen.routeName;
 
     final themeProvider = Provider.of<ThemeProvider>(context);

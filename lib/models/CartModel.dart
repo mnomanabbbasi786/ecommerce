@@ -6,7 +6,9 @@ class CartModel{
    var price;
   final int quantity;
   final String image;
-  CartModel({required this.id,required this.productName,required this.price,required this.quantity, required this.image});
+  final String userID;
+  final String productId;
+  CartModel({required this.id,required this.productName,required this.price,required this.quantity, required this.image,required this.userID,required this.productId});
 
 
 
@@ -16,7 +18,9 @@ class CartModel{
         productName: json['product_name'],
         price: json['price'],
         quantity: json['quantity'],
-      image: json['image']
+      image: json['image'],
+      productId: json['product_id'],
+      userID: json['user_id']
     );
   }
 
@@ -28,7 +32,9 @@ class CartModel{
       'product_name':productName,
       'price':price,
       'quantity':quantity,
-      'image':image
+      'image':image,
+      'product_id':productId,
+      'user_id':userID
     };
   }
 
