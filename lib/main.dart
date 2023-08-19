@@ -2,6 +2,7 @@ import 'package:ecommerce/credentials/credentails_auth.dart';
 import 'package:ecommerce/database/AuthenticationsRepostry.dart';
 import 'package:ecommerce/provider/CartProvider.dart';
 import 'package:ecommerce/provider/CategoryProvider.dart';
+import 'package:ecommerce/provider/CategoryProvider.dart';
 import 'package:ecommerce/provider/WishListProvider.dart';
 import 'package:ecommerce/screens/darkmodebutton.dart';
 import 'package:ecommerce/screens/home/home_screen.dart';

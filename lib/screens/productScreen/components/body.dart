@@ -1,15 +1,10 @@
-import 'package:ecommerce/models/WishlistModel.dart';
+
 import 'package:ecommerce/screens/home/components/categories.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shimmer/flutter_shimmer.dart';
-import 'package:provider/provider.dart';
-
-import '../../../components/fluttertoat.dart';
 import '../../../components/product_card.dart';
 import '../../../database/PopularProductRepostry.dart';
-
 import '../../../models/ProductModel.dart';
-import '../../../provider/WishListProvider.dart';
 import '../../../size_config.dart';
 
 class Body extends StatefulWidget {
@@ -81,7 +76,7 @@ class _BodyState extends State<Body> {
               return true;
             },
             child: isLoading? const SizedBox(
-              child:  PlayStoreShimmer( isPurplishMode: true,colors: [Colors.grey],),
+              child:  PlayStoreShimmer( isPurplishMode: false,),
             ): GridView.builder(
                 itemCount: productData.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
