@@ -1,8 +1,8 @@
-import 'package:ecommerce/credentials/credentails_auth.dart';
+
+import 'package:ecommerce/database/AuthenticationsRepostry.dart';
 import 'package:ecommerce/provider/CartProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'components/body.dart';
 import 'components/check_out_card.dart';
 
@@ -11,7 +11,7 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cartItems = Provider.of<CartProvider>(context);
-    cartItems.fetchItems(userId:     SupabaseCredentials.supabaseClient.auth.currentUser!.id);
+    cartItems.fetchItems(userId: AuthenticationsRepostry.currentUser);
     return Scaffold(
       appBar: buildAppBar(context),
       body: Body(),

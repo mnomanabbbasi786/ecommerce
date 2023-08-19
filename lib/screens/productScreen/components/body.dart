@@ -1,4 +1,5 @@
 import 'package:ecommerce/models/WishlistModel.dart';
+import 'package:ecommerce/screens/home/components/categories.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shimmer/flutter_shimmer.dart';
 import 'package:provider/provider.dart';
@@ -33,8 +34,8 @@ class _BodyState extends State<Body> {
     print('start: $start');
     print('end: $end');
     var response =
-        await PopularProductRepostry.fetchPopularProduct(start, end);
-    PopularProductRepostry.fetchPopularProductLength();
+        await PopularProductRepostry.fetchProduct(start: start,end: end,categoryName: Categories.category);
+    PopularProductRepostry.fetchProductLength(categoryName: Categories.category);
     productData.addAll(response);
     print('data length: ${productData.length}');
     isLoading = false;
