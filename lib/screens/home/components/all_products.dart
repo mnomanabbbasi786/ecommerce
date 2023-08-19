@@ -38,7 +38,8 @@ class _AllProductsState extends State<AllProducts> {
           padding:
               EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
           child: SectionTitle(
-              title: "All Products",
+              title: "Products",
+
               press: () {
                 Navigator.push(
                     context,
@@ -65,6 +66,7 @@ class _AllProductsState extends State<AllProducts> {
                       );
                     },
                   ),
+                  categoryProvider.tempLength ==0?Text('No Products',style: TextStyle(color: Colors.deepOrange),):
                   SizedBox(width: getProportionateScreenWidth(20)),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
