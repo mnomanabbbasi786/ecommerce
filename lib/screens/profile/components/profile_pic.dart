@@ -19,8 +19,16 @@ class ProfilePic extends StatelessWidget {
         fit: StackFit.expand,
         clipBehavior: Clip.none,
         children: [
-          CircleAvatar(
-            backgroundImage: AssetImage("assets/images/Profile Image.png"),
+          Container(
+            width: 50, // or desired width
+            height: 50, // or desired height
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                image: AssetImage("assets/images/qq.png"),
+                fit: BoxFit.cover, // This makes sure the image fills the circle
+              ),
+            ),
           ),
           Positioned(
             right: -16,
@@ -35,10 +43,10 @@ class ProfilePic extends StatelessWidget {
                     side: BorderSide(
                       color: themeProvider.isDark
                           ? const Color.fromARGB(255, 165, 163, 163)
-                          : Color(0xFFF5F6F9),
+                          : const Color(0xFFF5F6F9),
                     ),
                   ),
-                  backgroundColor: Color(0xFFF5F6F9),
+                  backgroundColor: const Color(0xFFF5F6F9),
                 ),
                 onPressed: () {},
                 child: SvgPicture.asset("assets/icons/Camera Icon.svg"),

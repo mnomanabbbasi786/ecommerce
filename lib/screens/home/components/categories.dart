@@ -6,8 +6,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import '../../../size_config.dart';
 
+// ignore: must_be_immutable
 class Categories extends StatelessWidget {
-
   List<String> icon = [
     'assets/icons/drinks.svg',
     'assets/icons/technology.svg',
@@ -34,39 +34,41 @@ class Categories extends StatelessWidget {
     'assets/icons/Shop Icon.svg',
   ];
 
-   static String category ='DRINKS';
+  static String category = 'DRINKS';
+
+  Categories({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     return Padding(
       padding: EdgeInsets.all(getProportionateScreenWidth(20)),
-
       child: FutureBuilder(
-        future: CategoryRepostry.fetchCategory(),
-        builder: (context,snapShot){
-          if(snapShot.hasData){
-            return SizedBox(
-              height: 120,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: snapShot.data!.length,
-                itemBuilder: (context,index){
-                  return CategoryCard(text: snapShot.data![index].name, press: (){},icon: icon[index]);
-                }
-              ),
-            );
-          }else{
-            return Container();
-          }
-        }
-      ),
+          future: CategoryRepostry.fetchCategory(),
+          builder: (context, snapShot) {
+            if (snapShot.hasData) {
+              return SizedBox(
+                height: 120,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: snapShot.data!.length,
+                    itemBuilder: (context, index) {
+                      return CategoryCard(
+                          text: snapShot.data![index].name,
+                          press: () {},
+                          icon: icon[index]);
+                    }),
+              );
+            } else {
+              return Container();
+            }
+          }),
     );
   }
 }
 
+// ignore: must_be_immutable
 class CategoryCard extends StatelessWidget {
-   CategoryCard({
+  CategoryCard({
     Key? key,
     required this.text,
     required this.press,
@@ -83,17 +85,15 @@ class CategoryCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
-        onTap: () async{
-         await categoryProvider.setLength(categoryName: text);
+        onTap: () async {
+          await categoryProvider.setLength(categoryName: text);
 
-          if(categoryProvider.length<20){
-
-            categoryProvider.setProduct(categoryName: text, start: 0, end: categoryProvider.length);
-          }else{
+          if (categoryProvider.length < 20) {
+            categoryProvider.setProduct(
+                categoryName: text, start: 0, end: categoryProvider.length);
+          } else {
             categoryProvider.setProduct(categoryName: text, start: 0, end: 20);
           }
-
-
         },
         child: SizedBox(
           width: getProportionateScreenWidth(55),
@@ -104,13 +104,17 @@ class CategoryCard extends StatelessWidget {
                 height: getProportionateScreenWidth(55),
                 width: getProportionateScreenWidth(55),
                 decoration: BoxDecoration(
-                  color: Color(0xFFFFECDF),
+                  color: Color.fromARGB(255, 239, 180, 141),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: SvgPicture.asset(icon),
               ),
               SizedBox(height: 5),
-              AutoSizeText(text!, textAlign: TextAlign.center,overflow: TextOverflow.ellipsis,)
+              AutoSizeText(
+                text,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+              )
             ],
           ),
         ),
