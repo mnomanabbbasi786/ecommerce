@@ -1,4 +1,3 @@
-
 import 'package:ecommerce/database/AuthenticationsRepostry.dart';
 import 'package:ecommerce/provider/CartProvider.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +10,7 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cartItems = Provider.of<CartProvider>(context);
-    cartItems.fetchItems(userId: AuthenticationsRepostry.currentUser);
+
     return Scaffold(
       appBar: buildAppBar(context),
       body: Body(),
