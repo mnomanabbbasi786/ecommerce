@@ -9,7 +9,6 @@ class PopularProductRepostry {
   static Future<List<ProductModel>> fetchPopularProduct(
       int start, int end) async {
     try {
-      print("poroororo1");
       final response = await supabaseClient
           .from('products')
           .select()
@@ -18,7 +17,7 @@ class PopularProductRepostry {
 
       List<ProductModel> products =
           (response.data as List).map((e) => ProductModel.fromJson(e)).toList();
-      print("poroororo2");
+
       return products;
     } catch (e) {
       print('Error when fetching Popular Products: $e');
@@ -30,7 +29,7 @@ class PopularProductRepostry {
     final response = await supabaseClient.from('products').select().execute();
     List<ProductModel> products =
         (response.data as List).map((e) => ProductModel.fromJson(e)).toList();
-    print("poroororo");
+
     length = products.length;
   }
 }

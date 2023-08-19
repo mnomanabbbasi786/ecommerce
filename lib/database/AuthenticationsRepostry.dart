@@ -1,4 +1,5 @@
 import 'package:ecommerce/credentials/credentails_auth.dart';
+import 'package:ecommerce/screens/sign_in/sign_in_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -66,5 +67,25 @@ class AuthenticationsRepostry {
   static Future<String?> getUserIdFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('userId');
+  }
+
+  // Function to clear the user ID from shared preferences.
+  static Future<void> _clearUserIdFromPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('userId');
+  }
+
+// Method to logout the user
+  static Future<void> logout(BuildContext context) async {
+    // 1. Clear the user ID from shared preferences
+    await _clearUserIdFromPrefs();
+
+    // 2. Logout from Supabase
+    await supabaseClient.auth.signOut();
+
+    // 3. Redirect to the login screen
+    // ignore: use_build_context_synchronously
+    Navigator.pushReplacementNamed(context,
+        SignInScreen.routeName); // Assuming /login is your login screen route
   }
 }

@@ -1,3 +1,4 @@
+import 'package:ecommerce/database/AuthenticationsRepostry.dart';
 import 'package:flutter/material.dart';
 
 import '../../notification/notificationTap.dart';
@@ -11,8 +12,8 @@ class Body extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 20),
       child: Column(
         children: [
-          ProfilePic(),
-          SizedBox(height: 20),
+          const ProfilePic(),
+          const SizedBox(height: 20),
           ProfileMenu(
             text: "My Account",
             icon: "assets/icons/User Icon.svg",
@@ -38,7 +39,9 @@ class Body extends StatelessWidget {
           ProfileMenu(
             text: "Log Out",
             icon: "assets/icons/Log out.svg",
-            press: () {},
+            press: () {
+              AuthenticationsRepostry.logout(context);
+            },
           ),
         ],
       ),

@@ -1,4 +1,3 @@
-
 import 'package:ecommerce/screens/notification/notificationTap.dart';
 import 'package:ecommerce/screens/wishlsit/WishListScreen.dart';
 import 'package:flutter/widgets.dart';
@@ -18,7 +17,7 @@ import 'screens/sign_up/sign_up_screen.dart';
 // All our routes will be available here
 final Map<String, WidgetBuilder> routes = {
   SplashScreen.routeName: (context) => SplashScreen(),
-  SignInScreen.routeName: (context) => SignInScreen(),
+  SignInScreen.routeName: (context) => const SignInScreen(),
   ForgotPasswordScreen.routeName: (context) => ForgotPasswordScreen(),
   LoginSuccessScreen.routeName: (context) => LoginSuccessScreen(),
   SignUpScreen.routeName: (context) => SignUpScreen(),
@@ -28,6 +27,6 @@ final Map<String, WidgetBuilder> routes = {
   DetailsScreen.routeName: (context) => DetailsScreen(),
   CartScreen.routeName: (context) => CartScreen(),
   ProfileScreen.routeName: (context) => ProfileScreen(),
-  WishListScreen.routeName:(context)=> WishListScreen(),
+  WishListScreen.routeName: (context) => const WishListScreen(),
   NotitcationTap.routeName: (context) => NotitcationTap(),
 };
