@@ -1,12 +1,12 @@
 
+import 'package:ecommerce/credentials/SupabaseClient.dart';
 import 'package:ecommerce/models/WishlistModel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../credentials/credentails_auth.dart';
 
 class WishlistRepostry{
 
-  static  SupabaseClient supabaseClient = SupabaseCredentials.supabaseClient;
+  static  SupabaseClient supabaseClient =MySupabaseClient.supabaseClient;
 
 
   static addToWishList(WishlistModel wishlistModel)async{

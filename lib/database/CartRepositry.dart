@@ -1,12 +1,12 @@
 
 
-import 'package:ecommerce/credentials/credentails_auth.dart';
+import 'package:ecommerce/credentials/SupabaseClient.dart';
 import 'package:ecommerce/models/CartModel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class CartRepositry{
   
-static  SupabaseClient supabaseClient = SupabaseCredentials.supabaseClient;
+static  SupabaseClient supabaseClient = MySupabaseClient.supabaseClient;
   
  static Future<List<CartModel>> fetchCartItems({required String userID})async{
     try{
