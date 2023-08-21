@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import '../../../database/AuthenticationsRepostry.dart';
+import '../../home/home_screen.dart';
 import '/constants.dart';
 import '/screens/sign_in/sign_in_screen.dart';
 import '/size_config.dart';
 
-// This is the best practice
 import '../components/splash_content.dart';
 import '../../../components/default_button.dart';
 
@@ -29,6 +30,16 @@ class _BodyState extends State<Body> {
       "image": "assets/images/splash_3.png"
     },
   ];
+  void _navigateBasedOnAuthStatus(BuildContext context) async {
+    final user = supabase.auth.currentUser;
+
+    if (user != null) {
+      Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+    } else {
+      Navigator.pushReplacementNamed(context, SignInScreen.routeName);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -70,7 +81,7 @@ class _BodyState extends State<Body> {
                     DefaultButton(
                       text: "Continue",
                       press: () {
-                        Navigator.pushNamed(context, SignInScreen.routeName);
+                        _navigateBasedOnAuthStatus(context);
                       },
                     ),
                     Spacer(),

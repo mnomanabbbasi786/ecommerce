@@ -21,9 +21,15 @@ void main() async {
   await Supabase.initialize(
       url: SupabaseCredentials.APIurl, anonKey: SupabaseCredentials.APIKey);
 
-  String? userId = await AuthenticationsRepostry.getUserIdFromPrefs();
-  String initialRoute =
-      (userId == null) ? SplashScreen.routeName : HomeScreen.routeName;
+  String? userIdFromPrefs = await AuthenticationsRepostry.getUserIdFromPrefs();
+  final user = supabase.auth.currentUser;
+
+  String initialRoute;
+  if (user != null && userIdFromPrefs != null) {
+    initialRoute = HomeScreen.routeName;
+  } else {
+    initialRoute = SplashScreen.routeName;
+  }
 
   await SentryFlutter.init(
     (options) {

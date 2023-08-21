@@ -15,9 +15,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 final messaging = FirebaseMessaging.instance;
 final supabase = Supabase.instance.client;
+
 class AuthenticationsRepostry {
   static String? userId;
-
 
   static Future<void> createNewCustomer(
       {required String email, required String password}) async {
@@ -83,8 +83,6 @@ class AuthenticationsRepostry {
     return prefs.getString('userId');
   }
 
-
-
   // Function to clear the user ID from shared preferences.
   static Future<void> _clearUserIdFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -99,9 +97,12 @@ class AuthenticationsRepostry {
     // 2. Logout from Supabase
     await supabase.auth.signOut();
 
-    // 3. Redirect to the login screen
+    // 3. Redirect to the login screen and clear all previous routes
     // ignore: use_build_context_synchronously
-    Navigator.pushReplacementNamed(context,
-        SignInScreen.routeName); // Assuming /login is your login screen route
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => const SignInScreen()),
+      (Route<dynamic> route) => false, // This will remove all previous routes
+    );
   }
 }
