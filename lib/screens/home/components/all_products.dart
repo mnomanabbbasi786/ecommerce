@@ -3,6 +3,7 @@ import 'package:ecommerce/components/product_card.dart';
 import 'package:ecommerce/database/PopularProductRepostry.dart';
 import 'package:ecommerce/models/ProductModel.dart';
 import 'package:ecommerce/provider/CategoryProvider.dart';
+import 'package:ecommerce/provider/SearchProvider.dart';
 import 'package:ecommerce/screens/home/components/categories.dart';
 import 'package:ecommerce/screens/home/components/section_title.dart';
 import 'package:ecommerce/screens/productScreen/AllProductScreen.dart';
@@ -31,7 +32,7 @@ class _AllProductsState extends State<AllProducts> {
 
   @override
   Widget build(BuildContext context) {
-
+      final categoryName = Provider.of<CategoryProvider>(context,listen: false);
     return Column(
       children: [
         Padding(
@@ -44,7 +45,7 @@ class _AllProductsState extends State<AllProducts> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => AllProductsScreen()));
+                        builder: (context) => AllProductsScreen(categoryName: categoryName.categoryName,)));
               }),
         ),
         SizedBox(height: getProportionateScreenWidth(20)),
@@ -57,16 +58,33 @@ class _AllProductsState extends State<AllProducts> {
                   ...List.generate(
                     categoryProvider.tempLength,
                         (index) {
+                      return Consumer<SearchProvider>(
+                        builder: (context,seachController, child){
+                          if(seachController.search.isEmpty){
+                            return ProductCard(
+                              id: categoryProvider.product[index].id,
+                              productName: categoryProvider.product[index].productName,
+                              rrPrice: categoryProvider.product[index].rrPrice,
+                              image: categoryProvider.product[index].image,
+                            );
+                          }
+                        else if(categoryProvider.product[index].productName.toString().toLowerCase().contains(seachController.search.toLowerCase())){
+                            return ProductCard(
+                              id: categoryProvider.product[index].id,
+                              productName: categoryProvider.product[index].productName,
+                              rrPrice: categoryProvider.product[index].rrPrice,
+                              image: categoryProvider.product[index].image,
+                            );
+                          }else{
+                              return Container();
 
-                      return ProductCard(
-                        id: categoryProvider.product[index].id,
-                        productName: categoryProvider.product[index].productName,
-                        rrPrice: categoryProvider.product[index].rrPrice,
-                        image: categoryProvider.product[index].image,
+                          }
+
+                        }
                       );
                     },
                   ),
-                  categoryProvider.tempLength ==0?Text('No Products',style: TextStyle(color: Colors.deepOrange),):
+                  categoryProvider.tempLength ==0?const Text('No Products',style: TextStyle(color: Colors.deepOrange),):
                   SizedBox(width: getProportionateScreenWidth(20)),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
@@ -100,7 +118,7 @@ class _AllProductsState extends State<AllProducts> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => AllProductsScreen(),
+                              builder: (context) => AllProductsScreen(categoryName: categoryName.categoryName),
                             ),
                           );
                         },
@@ -112,15 +130,6 @@ class _AllProductsState extends State<AllProducts> {
             }
           )
         ),
-        // isLoading
-        //     ? const Center(
-        //         child: SizedBox(
-        //         child: PlayStoreShimmer(
-        //           isPurplishMode: true,
-        //           colors: [Colors.grey],
-        //         ),
-        //       ))
-        //     : Container(),
       ],
     );
   }

@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce/provider/CartProvider.dart';
+import 'package:ecommerce/screens/cart/components/body.dart';
+import 'package:ecommerce/screens/darkmodebutton.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,8 +25,12 @@ class CartCard extends StatelessWidget {
   var price;
   var quantity;
 
+
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final cartProvider = Provider.of<CartProvider>(context);
+    cartProvider.setPrice(cartProvider.price + price);
     return Row(
       children: [
         SizedBox(
@@ -34,12 +40,16 @@ class CartCard extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.all(getProportionateScreenWidth(10)),
               decoration: BoxDecoration(
-                color: Color(0xFFF5F6F9),
+                color: const Color(0xFFF5F6F9),
                 borderRadius: BorderRadius.circular(15),
               ),
               child: CachedNetworkImage(
                 imageUrl: image,
-                placeholder: (context, url) => CircularProgressIndicator(),
+                fadeInDuration: const Duration(
+                    seconds: 1), // control the fade in duration
+                placeholder: (context, url) => Container(
+                    color: Colors
+                        .transparent), // transparent container as placeholder
                 errorWidget: (context, url, error) => Icon(Icons.error),
               ),
             ),
@@ -51,7 +61,7 @@ class CartCard extends StatelessWidget {
           children: [
             Text(
               productName,
-              style: TextStyle(color: Colors.black, fontSize: 16),
+              style: TextStyle(color: themeProvider.isDark?Colors.white:Colors.black, fontSize: 16),
               maxLines: 2,
             ),
             SizedBox(height: 10),

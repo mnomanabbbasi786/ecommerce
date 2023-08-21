@@ -8,15 +8,16 @@ class CategoryProvider with ChangeNotifier{
 
   int _length =0;
   List<ProductModel> _product =[];
-
+  String _categoryName = 'DRINKS';
   List<ProductModel>  get product => _product;
 
   int _tempLength = 0;
   int get tempLength => _tempLength;
   int get length => _length;
+  String get categoryName => _categoryName;
 
   setProduct({required String categoryName,required int start,required int end})async{
-
+    _categoryName =categoryName;
     _product =[];
     _tempLength = 0;
       _product = await PopularProductRepostry.fetchProduct(start: start, end: end, categoryName: categoryName);

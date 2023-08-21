@@ -1,3 +1,4 @@
+import 'package:ecommerce/database/AuthenticationsRepostry.dart';
 import 'package:flutter/material.dart';
 import '../../notification/notificationTap.dart';
 import '/screens/cart/cart_screen.dart';
@@ -7,8 +8,10 @@ import 'icon_btn_with_counter.dart';
 import 'search_field.dart';
 
 class HomeHeader extends StatelessWidget {
-  const HomeHeader({
+  String? uuid;
+   HomeHeader({
     Key? key,
+
   }) : super(key: key);
 
   @override
@@ -22,7 +25,11 @@ class HomeHeader extends StatelessWidget {
           SearchField(),
           IconBtnWithCounter(
             svgSrc: "assets/icons/Cart Icon.svg",
-            press: () => Navigator.pushNamed(context, CartScreen.routeName),
+            press: () async{
+              uuid=await AuthenticationsRepostry.getUserIdFromPrefs();
+              print(uuid);
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>CartScreen(uuid: uuid)));
+            },
           ),
           IconBtnWithCounter(
             svgSrc: "assets/icons/Bell.svg",

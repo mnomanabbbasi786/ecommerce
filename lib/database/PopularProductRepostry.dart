@@ -5,7 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class PopularProductRepostry{
  static SupabaseClient supabaseClient = MySupabaseClient.supabaseClient;
-  static var length;
+
 
   static Future<List<ProductModel>> fetchProduct({required int start,required int end,required String categoryName})async{
     try{

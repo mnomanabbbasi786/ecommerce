@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce/provider/CartProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../darkmodebutton.dart';
 import '/models/Cart.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
@@ -26,6 +27,7 @@ class WishlistCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Row(
       children: [
         SizedBox(
@@ -56,7 +58,7 @@ class WishlistCard extends StatelessWidget {
           children: [
             Text(
               productName,
-              style: const TextStyle(color: Colors.black, fontSize: 16),
+              style:  TextStyle(color: themeProvider.isDark?Colors.white: Colors.black, fontSize: 16),
               maxLines: 2,
             ),
             const SizedBox(height: 10),
