@@ -3,10 +3,10 @@ class CartModel{
 
   final String id;
   final String productName;
-   var price;
+  dynamic price;
   final int quantity;
   final String image;
-  final String userID;
+  var userID;
   final String productId;
   CartModel({required this.id,required this.productName,required this.price,required this.quantity, required this.image,required this.userID,required this.productId});
 

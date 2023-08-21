@@ -1,6 +1,9 @@
 import 'package:ecommerce/credentials/credentails_auth.dart';
 import 'package:ecommerce/screens/sign_in/sign_in_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../components/fluttertoat.dart';
@@ -10,13 +13,16 @@ import 'package:flutter/material.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+final messaging = FirebaseMessaging.instance;
+final supabase = Supabase.instance.client;
 class AuthenticationsRepostry {
-  static SupabaseClient supabaseClient = SupabaseCredentials.supabaseClient;
+  static String? userId;
+
 
   static Future<void> createNewCustomer(
       {required String email, required String password}) async {
     try {
-      final AuthResponse res = await supabaseClient.auth.signUp(
+      final AuthResponse res = await supabase.auth.signUp(
         email: email,
         password: password,
       );
@@ -35,7 +41,7 @@ class AuthenticationsRepostry {
   static signInUser(BuildContext context,
       {required String email, required String password}) async {
     try {
-      final AuthResponse res = await supabaseClient.auth.signInWithPassword(
+      final AuthResponse res = await supabase.auth.signInWithPassword(
         email: email,
         password: password,
       );
@@ -43,6 +49,8 @@ class AuthenticationsRepostry {
         print('SignIn successful');
         await _storeUserIdInPrefs(
             res.user!.id); // Storing user ID in shared prefs.
+
+        userId = await getUserIdFromPrefs();
         ToastUtil.showCustomToast(
             message: 'SignIn successful',
             iconData: Icons.person,
@@ -54,12 +62,18 @@ class AuthenticationsRepostry {
       }
     } catch (e) {
       print('Exception caught: $e');
+      ToastUtil.showCustomToast(
+          message: 'SignIn failed:$e',
+          iconData: Icons.person,
+          context: context);
+      KeyboardUtil.hideKeyboard(context);
     }
   }
 
   // Function to store the user ID in shared preferences.
   static Future<void> _storeUserIdInPrefs(String userId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
     await prefs.setString('userId', userId);
   }
 
@@ -68,6 +82,8 @@ class AuthenticationsRepostry {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('userId');
   }
+
+
 
   // Function to clear the user ID from shared preferences.
   static Future<void> _clearUserIdFromPrefs() async {
@@ -81,7 +97,7 @@ class AuthenticationsRepostry {
     await _clearUserIdFromPrefs();
 
     // 2. Logout from Supabase
-    await supabaseClient.auth.signOut();
+    await supabase.auth.signOut();
 
     // 3. Redirect to the login screen
     // ignore: use_build_context_synchronously

@@ -1,5 +1,4 @@
 
-import 'package:ecommerce/screens/home/components/categories.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shimmer/flutter_shimmer.dart';
 import '../../../components/product_card.dart';
@@ -8,14 +7,15 @@ import '../../../models/ProductModel.dart';
 import '../../../size_config.dart';
 
 class Body extends StatefulWidget {
-  const Body({super.key});
+  String categoryName;
+   Body({super.key, required this.categoryName});
 
   @override
   State<Body> createState() => _BodyState();
 }
 
 class _BodyState extends State<Body> {
-
+  var _length;
   int start = 0;
   int end = 20;
   bool isLoading = true;
@@ -24,18 +24,13 @@ class _BodyState extends State<Body> {
   var hasMoreData = false;
 
   fetchPopularProducts() async {
-    print("FETCHING DATA");
-    print('lenth${PopularProductRepostry.length}');
-    print('start: $start');
-    print('end: $end');
+    _length = await PopularProductRepostry.fetchProductLength(categoryName: widget.categoryName);
     var response =
-        await PopularProductRepostry.fetchProduct(start: start,end: end,categoryName: Categories.category);
-    PopularProductRepostry.fetchProductLength(categoryName: Categories.category);
+        await PopularProductRepostry.fetchProduct(start: start,end: end,categoryName: widget.categoryName);
+    PopularProductRepostry.fetchProductLength(categoryName: widget.categoryName);
     productData.addAll(response);
-    print('data length: ${productData.length}');
     isLoading = false;
     setState(() {});
-    print(productData);
   }
 
   @override
@@ -49,7 +44,7 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('All Products'),
+        title: const Text('Products'),
       ),
       body: SafeArea(
         child: Padding(
@@ -61,17 +56,16 @@ class _BodyState extends State<Body> {
                   .round() <=
                   500)  {
                 start = end;
-                if ((end + 50) > PopularProductRepostry.length) {
-                  end = PopularProductRepostry.length;
+                if ((end + 50) > _length) {
+                  end = _length;
                   hasMoreData = true;
                 } else {
                   end = end + 50;
                 }
                 fetchPopularProducts();
                 setState(() {
-                  isLoading = true;
-                });
 
+                });
               }
               return true;
             },

@@ -1,5 +1,6 @@
 
 import 'package:ecommerce/credentials/SupabaseClient.dart';
+import 'package:ecommerce/database/AuthenticationsRepostry.dart';
 import 'package:ecommerce/models/WishlistModel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -22,8 +23,9 @@ class WishlistRepostry{
 
   static Future<List<WishlistModel>> fetchWishList()async{
     try{
+      var _userId = await AuthenticationsRepostry.getUserIdFromPrefs();
           final response = await supabaseClient.from('Wishlist')
-              .select().execute();
+              .select().eq('user_id', _userId ).execute();
           List<WishlistModel> wishListItems = (response.data as List)
           .map((e) => WishlistModel.fromJson(e)).toList();
           return wishListItems;

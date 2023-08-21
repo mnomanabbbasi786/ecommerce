@@ -1,18 +1,33 @@
+import 'package:ecommerce/provider/SearchProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../../constants.dart';
 import '../../../size_config.dart';
 import '../../darkmodebutton.dart';
 
-class SearchField extends StatelessWidget {
-  const SearchField({
+class SearchField extends StatefulWidget {
+   SearchField({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<SearchField> createState() => _SearchFieldState();
+}
+
+class _SearchFieldState extends State<SearchField> {
+
+  final searchController = TextEditingController();
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    searchController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+    final searchProvider = Provider.of<SearchProvider>(context, listen: false);
 
     return Container(
       width: SizeConfig.screenWidth * 0.6,
@@ -24,7 +39,10 @@ class SearchField extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
       ),
       child: TextField(
-        onChanged: (value) => print(value),
+        controller: searchController,
+        onChanged: (value){
+          searchProvider.setSearchValue(value.toString());
+        },
         decoration: InputDecoration(
           focusColor:
               themeProvider.isDark ? Color(0xFFF5F6F9) : Colors.grey[800],

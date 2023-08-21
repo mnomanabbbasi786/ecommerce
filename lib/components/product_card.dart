@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce/components/fluttertoat.dart';
+import 'package:ecommerce/database/AuthenticationsRepostry.dart';
 import 'package:ecommerce/models/WishlistModel.dart';
 import 'package:ecommerce/provider/WishListProvider.dart';
 import 'package:flutter/material.dart';
@@ -92,7 +93,7 @@ class ProductCard extends StatelessWidget {
                   ),
                   InkWell(
                     borderRadius: BorderRadius.circular(50),
-                    onTap: (){
+                    onTap: ()async{
                       if(wishListprovider.selectItem.contains(id)){
                         wishListprovider.removeItem(id);
                         ToastUtil.showCustomToast(
@@ -101,12 +102,17 @@ class ProductCard extends StatelessWidget {
                           iconData: Icons.remove_circle_outline,
                         );
                       }else{
+                        var userID = await AuthenticationsRepostry.getUserIdFromPrefs();
                         wishListprovider.addItem(id,
                             WishlistModel(
                                 id: id,
                                 productName: productName,
                                 price: rrPrice,
-                                image: image));
+                                image: image,
+                              productId: id,
+                              userId: userID,
+                            )
+                        );
                         ToastUtil.showCustomToast(
                           context: context,
                           message: "Added to wish list",

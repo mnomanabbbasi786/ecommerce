@@ -8,8 +8,9 @@ class CartRepositry{
   
 static  SupabaseClient supabaseClient = MySupabaseClient.supabaseClient;
   
- static Future<List<CartModel>> fetchCartItems({required String userID})async{
+ static Future<List<CartModel>> fetchCartItems({required String? userID})async{
     try{
+      print('fetch car $userID');
           final response = await supabaseClient.from('Cart')
               .select().eq('user_id', userID).execute();
           List<CartModel> items = (response.data as List)
@@ -33,7 +34,7 @@ static  SupabaseClient supabaseClient = MySupabaseClient.supabaseClient;
 
   static deleteFromCart(String id)async{
    try{
-        await supabaseClient.from('Cart').delete().eq('id', id);
+        await supabaseClient.from('Cart').delete().eq('user_id', id);
    }catch(e){
 
    }

@@ -2,10 +2,11 @@ import 'package:ecommerce/credentials/credentails_auth.dart';
 import 'package:ecommerce/database/AuthenticationsRepostry.dart';
 import 'package:ecommerce/provider/CartProvider.dart';
 import 'package:ecommerce/provider/CategoryProvider.dart';
-import 'package:ecommerce/provider/CategoryProvider.dart';
+import 'package:ecommerce/provider/SearchProvider.dart';
 import 'package:ecommerce/provider/WishListProvider.dart';
 import 'package:ecommerce/screens/darkmodebutton.dart';
 import 'package:ecommerce/screens/home/home_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart' as provider;
 import '/routes.dart';
@@ -16,12 +17,15 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp();
   await Supabase.initialize(
       url: SupabaseCredentials.APIurl, anonKey: SupabaseCredentials.APIKey);
 
   String? userId = await AuthenticationsRepostry.getUserIdFromPrefs();
   String initialRoute =
       (userId == null) ? SplashScreen.routeName : HomeScreen.routeName;
+
+
   await SentryFlutter.init(
     (options) {
       options.dsn =
@@ -34,7 +38,11 @@ void main() async {
         provider.ChangeNotifierProvider(
             create: (context) => WishListProvider()),
         provider.ChangeNotifierProvider(create: (context) => CartProvider()),
-        provider.ChangeNotifierProvider(create: (context) => CategoryProvider())
+        provider.ChangeNotifierProvider(
+            create: (context) => CategoryProvider()),
+        provider.ChangeNotifierProvider(
+          create: (context) => SearchProvider(),
+        )
       ],
       child: MyApp(initialRoute: initialRoute),
     )),

@@ -1,8 +1,6 @@
 import 'package:ecommerce/screens/productScreen/PopularProductScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../../components/error.dart';
-import '../../../provider/WishListProvider.dart';
 import '../../../size_config.dart';
 import 'categories.dart';
 import 'discount_banner.dart';
@@ -20,7 +18,7 @@ class Body extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: getProportionateScreenHeight(20)),
-            const HomeHeader(),
+             HomeHeader(),
             SizedBox(height: getProportionateScreenWidth(10)),
             const DiscountBanner(),
             Categories(),
