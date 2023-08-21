@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:ecommerce/database/CategoryRepostry.dart';
 import 'package:ecommerce/provider/CategoryProvider.dart';
+import 'package:ecommerce/screens/home/components/section_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -41,24 +42,30 @@ class Categories extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(getProportionateScreenWidth(20)),
 
-      child: FutureBuilder(
-        future: CategoryRepostry.fetchCategory(),
-        builder: (context,snapShot){
-          if(snapShot.hasData){
-            return SizedBox(
-              height: 120,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: snapShot.data!.length,
-                itemBuilder: (context,index){
-                  return CategoryCard(text: snapShot.data![index].name, press: (){},icon: icon[index]);
-                }
-              ),
-            );
-          }else{
-            return Container();
-          }
-        }
+      child: Column(
+        children: [
+          SectionTitle(title: "Categories", press: () {}),
+          SizedBox(height: getProportionateScreenWidth(10)),
+          FutureBuilder(
+            future: CategoryRepostry.fetchCategory(),
+            builder: (context,snapShot){
+              if(snapShot.hasData){
+                return SizedBox(
+                  height: 120,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: snapShot.data!.length,
+                    itemBuilder: (context,index){
+                      return CategoryCard(text: snapShot.data![index].name, press: (){},icon: icon[index]);
+                    }
+                  ),
+                );
+              }else{
+                return Container();
+              }
+            }
+          ),
+        ],
       ),
     );
   }

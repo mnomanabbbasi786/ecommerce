@@ -84,7 +84,13 @@ class _AllProductsState extends State<AllProducts> {
                       );
                     },
                   ),
-                  categoryProvider.tempLength ==0?const Text('No Products',style: TextStyle(color: Colors.deepOrange),):
+                  categoryProvider.tempLength ==0?const Column(
+                    children: [
+                      Text('Select Category',style: TextStyle(color: Colors.deepOrange),),
+                      Text('No Products',style: TextStyle(color: Colors.grey,fontSize: 12),),
+                    ],
+                  ):
+
                   SizedBox(width: getProportionateScreenWidth(20)),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
