@@ -51,14 +51,19 @@ class _BodyState extends State<Body> {
                       );
                     });
               } else {
-                return  Center(
+                return Center(
                   child: RotatedBox(
                     quarterTurns: 1, // 90-degree rotation
                     child: Container(
-                      width: MediaQuery.of(context).size.height, // Make sure the container covers the screen width
-                      height: MediaQuery.of(context).size.width, // Make sure the container covers the screen height
-                      child: PlayStoreShimmer(
+                      width: MediaQuery.of(context)
+                          .size
+                          .height, // Make sure the container covers the screen width
+                      height: MediaQuery.of(context)
+                          .size
+                          .width, // Make sure the container covers the screen height
+                      child: const PlayStoreShimmer(
                         isPurplishMode: false,
+
                         // Adjust shimmer properties here
                       ),
                     ),
