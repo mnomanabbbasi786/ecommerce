@@ -25,7 +25,6 @@ void main() async {
   String initialRoute =
       (userId == null) ? SplashScreen.routeName : HomeScreen.routeName;
 
-
   await SentryFlutter.init(
     (options) {
       options.dsn =
